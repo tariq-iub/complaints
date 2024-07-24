@@ -1,19 +1,17 @@
-@extends('layouts.powereye')
-
 @section('content')
     <div class="pb-5">
         <div class="row g-4">
             <div class="col-12 col-xxl-6">
                 <div class="mb-8">
-                    <h2 class="mb-2">{{ $site->title }}</h2>
-                    <h5 class="text-body-tertiary fw-semibold">{{ $site->factory->title . ' - ' . $site->factory->address }}</h5>
+                    <h2 class="mb-2">{{ $section->title }}</h2>
+                    <h5 class="text-body-tertiary fw-semibold">{{ $section->factory->title . ' - ' . $section->factory->address }}</h5>
                 </div>
                 <div class="row align-items-center g-4">
                     <div class="col-12 col-md-auto">
                         <div class="d-flex align-items-center"><span class="fa-stack" style="min-height: 46px;min-width: 46px;"><span class="fa-solid fa-square fa-stack-2x dark__text-opacity-50 text-success-light" data-fa-transform="down-4 rotate--10 left-4"></span><span class="fa-solid fa-circle fa-stack-2x stack-circle text-stats-circle-success" data-fa-transform="up-4 right-3 grow-2"></span><span class="fa-stack-1x fa-solid fa-star text-success " data-fa-transform="shrink-2 up-8 right-6"></span></span>
                             <div class="ms-3">
                                 <h4 class="mb-0">57 new orders</h4>
-                                <p class="text-body-secondary fs-9 mb-0">Awating processing</p>
+                                <p class="text-body-secondary fs-9 mb-0">Awaiting processing</p>
                             </div>
                         </div>
                     </div>

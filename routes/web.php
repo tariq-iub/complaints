@@ -8,6 +8,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SiteController;
+use App\Http\Controllers\SectionController;
+use App\Http\Controllers\SectionHandlerController;;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +28,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('/menus', MenuController::class);
     Route::resource('/factories', FactoryController::class);
     Route::resource('/sites', SiteController::class);
+    Route::resource('/sections', SectionController::class);
+    // routes/web.php
+    Route::get('/sections/{section}/handlers', [SectionHandlerController::class, 'showHandlers'])->name('section-handlers.show');
+    Route::get('/sections/{section}/handlers/create', [SectionHandlerController::class, 'create'])->name('section-handlers.create');
     Route::resource('/devices', DeviceController::class);
     Route::controller(DataFileController::class)
         ->as('files.')

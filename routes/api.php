@@ -27,5 +27,5 @@ Route::post('/data/edit', [DataFileController::class, 'edit'])->name('edit');
 Route::post('/data/replace', [DataFileController::class, 'replace'])->name('replace');
 Route::get('/factories', [FactoryController::class, 'fetch']);
 Route::get('/sites', [SiteController::class, 'fetch']);
-
+Route::get('/sections',[SectionController::class, 'fetch']);
 Route::post('/factory-users', [FactoryUserController::class, 'store'])->name('api.factory-users.store');
