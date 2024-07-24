@@ -29,12 +29,14 @@
 
             <div class="col-auto">
                 <div class="d-flex align-items-center">
-                    <button class="btn btn-link text-body me-4 px-0">
-                        <span class="fa-solid fa-file-export fs-9 me-2"></span>Export
-                    </button>
-                    <a class="btn btn-primary" href="{{ route('sections.create') }}">
+                    <a class="btn btn-primary me-2" href="{{ route('sections.create') }}">
                         <span class="fas fa-plus me-2"></span>
                         Add Section
+                    </a>
+
+                    <a class="btn btn-primary" href="{{ route('handlers.index') }}">
+                        <span class="fas fa-users me-2"></span>
+                        Manage Handlers
                     </a>
                 </div>
             </div>
@@ -90,9 +92,6 @@
                                         <a class="dropdown-item" href="{{ route('sections.edit', $section) }}">
                                             Edit
                                         </a>
-                                        <a class="dropdown-item" href="{{ route('section-handlers.show', $section) }}">
-                                            View Section Handlers
-                                        </a>
 
                                         <div class="dropdown-divider"></div>
                                         <form action="{{ route('sections.destroy', $section) }}" method="POST"
@@ -134,5 +133,5 @@
             </div>
         </div>
     </div>
-    
+
 @endsection

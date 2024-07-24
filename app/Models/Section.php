@@ -8,29 +8,29 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Section extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
+    use SoftDeletes;
 
     protected $fillable = ['title', 'factory_id'];
-
-    protected $casts = [
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-        'deleted_at' => 'datetime'
-    ];
 
     public function factory()
     {
         return $this->belongsTo(Factory::class);
     }
 
-    public function components()
+    public function handlers()
     {
-        return $this->hasMany(Component::class);
+        return $this->hasMany(SectionHandler::class);
     }
 
-    public function sectionHandlers()
+    public function getHandlersCountAttribute()
     {
-        return $this->hasMany(SectionHandler::class); // Updated to use SectionHandler
+        return $this->handlers()->count();
+    }
+
+    public function sectionHead()
+    {
+        return $this->handlers()->firstWhere("is_head", true);
     }
 }
 

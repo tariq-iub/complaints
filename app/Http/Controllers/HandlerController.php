@@ -6,15 +6,16 @@ use App\Models\Section;
 use App\Models\SectionHandler;
 use Illuminate\Http\Request;
 
-class SectionHandlerController extends Controller
+class HandlerController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        $sections = Section::all();
         $handlers = SectionHandler::with(['section', 'user'])->get();
-        return view('admin.sections.index', compact('handlers'));
+        return view('admin.handlers.index', compact('handlers', 'sections'));
     }
 
     /**
@@ -52,7 +53,7 @@ class SectionHandlerController extends Controller
     {
         // Fetch the handlers related to the section
         $handlers = SectionHandler::where('section_id', $section->id)->get();
-        
+
         // Pass the handlers and section to the view
         return view('admin.sections.handlers', [
             'section' => $section,

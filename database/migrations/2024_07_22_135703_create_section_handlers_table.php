@@ -10,11 +10,11 @@ class CreateSectionHandlersTable extends Migration
     {
         Schema::create('section_handlers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('section_id')->constrained()->onDelete('cascade');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('is_heard')->default('No'); // Adjust based on your needs
-            $table->timestamps();
+            $table->unsignedBigInteger('section_id');
+            $table->unsignedBigInteger('user_id');
+            $table->boolean('is_head')->default(false);
             $table->softDeletes();
+            $table->timestamps();
         });
     }
 

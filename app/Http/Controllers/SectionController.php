@@ -13,7 +13,9 @@ class SectionController extends Controller
      */
     public function index()
     {
-        $sections = Section::with('factory')->get();
+        $sections = Section::with(['factory', 'handlers'])
+            ->get();
+
         return view('admin.sections.index', compact('sections'));
     }
 
@@ -82,17 +84,22 @@ class SectionController extends Controller
         return redirect()->route('sections.index')->with('success', 'Section deleted successfully.');
     }
 
-    public function fetch(Request $request)
+    public function fetch($id)
     {
-        if ($request->input('id')) {
-            $data = Section::where('id', $request->input('id'))
-                ->with(['components'])
+        if ($id) {
+            $data = Section::where('id', $id)
+                ->with(['handlers.user'])
                 ->first();
 
-            if ($data) return response()->json($data, 200);
-            else return response()->json(['message' => 'Section is not registered in the system.'], 404);
+            if ($data)
+            {
+                return view('admin.handlers.partial.handlers_table', compact('data'));
+            }
+            else {
+                return response()->json(['message' => 'Section is not registered in the system.'], 404);
+            }
         } else {
-            $data = Section::with(['components'])
+            $data = Section::with(['handlers'])
                 ->get();
 
             if ($data) return response()->json($data, 200);

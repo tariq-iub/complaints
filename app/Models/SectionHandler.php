@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class SectionHandler extends Model
 {
+    use HasFactory;
     use SoftDeletes;
-
-    protected $table = 'section_handlers';
 
     protected $fillable = [
         'section_id',
@@ -17,19 +17,13 @@ class SectionHandler extends Model
         'is_heard',
     ];
 
-    protected $casts = [
-        'is_heard' => 'string', // Adjust casting as needed
-    ];
-
-    public $timestamps = true;
-
     public function section()
     {
-        return $this->belongsTo(Section::class, 'section_id');
+        return $this->belongsTo(Section::class);
     }
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
     }
 }
