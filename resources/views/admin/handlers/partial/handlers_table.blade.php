@@ -3,12 +3,12 @@
         <div class="row g-3 justify-content-between align-items-center">
             <div class="col col-md">
                 <h4 class="text-body mb-0">
-                    {{ $data->title }}
+                    {{ ucwords($data->title) }}
                 </h4>
             </div>
 
             <a class="col col-md-auto btn btn-sm btn-phoenix-primary preview-btn ms-2"
-            data-bs-toggle="modal" data-bs-target="#handlerModal">
+                onclick="OpenModal({{ $data->id }})">
                 <span class="fas fa-plus me-2"></span>
                 Add New Handler
             </a>
@@ -16,7 +16,6 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-
             <table class="table table-sm">
                 <thead>
                 <tr>
@@ -25,18 +24,15 @@
                     <th scope="col">Email</th>
                     <th scope="col">Is Head</th>
                     <th scope="col">Added At</th>
+                    <th scope="col">Actions</th> <!-- Added Actions column -->
                 </tr>
                 </thead>
                 <tbody>
                 @foreach($data->handlers as $key => $row)
                     <tr>
                         <td scope="row">{{ $key + 1 }}</td>
-                        <td>
-                            {{ $row->user->name }}
-                        </td>
-                        <td>
-                            {{ $row->user->email }}
-                        </td>
+                        <td>{{ $row->user->name }}</td>
+                        <td>{{ $row->user->email }}</td>
                         <td>
                             @if($row->is_head)
                             <span class="badge badge-phoenix fs-10 badge-phoenix-success">
@@ -48,9 +44,18 @@
                             </span>
                             @endif
                         </td>
+                        <td>{{ $row->created_at->format("d-m-Y") }}</td>
                         <td>
-                            {{ $row->created_at->format("d-m-Y") }}
+                            <button class="btn btn-sm btn-phoenix" onclick="openEditModal({{ $row->id }})">
+                                <span class="fas fa-edit"></span>
+                            </button>
                         </td>
+                        <td>
+                            <button class="btn btn-sm btn-phoenix-danger" onclick="confirmDelete({{ $row->id }})">
+                                <span class="fas fa-trash"></span>
+                            </button>
+                        </td>
+
                     </tr>
                 @endforeach
                 </tbody>

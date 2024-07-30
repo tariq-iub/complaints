@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Section;
 use App\Models\SectionHandler;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class HandlerController extends Controller
@@ -15,7 +16,8 @@ class HandlerController extends Controller
     {
         $sections = Section::all();
         $handlers = SectionHandler::with(['section', 'user'])->get();
-        return view('admin.handlers.index', compact('handlers', 'sections'));
+        $users = User::all();
+        return view('admin.handlers.index', compact('handlers', 'sections', 'users'));
     }
 
     /**
@@ -29,23 +31,25 @@ class HandlerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, Section $section)
+    public function store(Request $request)
     {
-        $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'is_heard' => 'required|string',
+        // Validate and process the request
+        $validated = $request->validate([
+            'section_id' => 'required|integer',
+            'user_id' => 'required|integer',
+            'is_head' => 'required|boolean',
         ]);
 
-        // Create the new section handler
-        $section->sectionHandlers()->create([
-            'user_id' => $request->user_id,
-            'is_heard' => $request->is_heard,
-        ]);
+        // Create or update the handler
+        $handler = SectionHandler::updateOrCreate(
+            ['section_id' => $validated['section_id'], 'user_id' => $validated['user_id']],
+            ['is_head' => $validated['is_head']]
+        );
 
-        return redirect()->route('section-handlers.show', $section->id)
-            ->with('success', 'Section Handler created successfully.');
+        // Return a response
+        return response()->json(['success' => true, 'handler' => $handler]);
     }
-
+    
     /**
      * Display the specified resource.
      */
@@ -64,32 +68,49 @@ class HandlerController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(SectionHandler $sectionHandler)
+    public function edit($id)
     {
-        return view('admin.sections.sectionHandlers.edit', compact('sectionHandler'));
+        $handler = SectionHandler::findOrFail($id);
+        $users = User::all();
+        $sections = Section::all();
+
+        return response()->json([
+            'handler' => $handler,
+            'users' => $users,
+            'sections' => $sections,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, SectionHandler $sectionHandler)
+    public function update(Request $request, $id)
     {
         $request->validate([
-            'section_id' => 'required|exists:sections,id',
+            
             'user_id' => 'required|exists:users,id',
-            'is_heard' => 'required|string',
+            'is_head' => 'required|boolean',
+            'section_id' => 'required|exists:sections,id', // Validate section_id
         ]);
 
-        $sectionHandler->update($request->all());
-        return redirect()->route('sectionHandlers.index')->with('success', 'Section Handler updated successfully.');
+        $handler = SectionHandler::findOrFail($id);
+        $handler->user_id = $request->input('user_id');
+        $handler->is_head = $request->input('is_head');
+        $handler->section_id = $request->input('section_id'); // Update section_id
+        $handler->save();
+
+        return response()->json(['success' => true]);
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(SectionHandler $sectionHandler)
+    public function destroy($id)
     {
-        $sectionHandler->delete();
-        return redirect()->route('sectionHandlers.index')->with('success', 'Section Handler deleted successfully.');
+        $handler = SectionHandler::findOrFail($id);
+        $handler->delete();
+
+        return response()->json(['success' => true]);
     }
 }

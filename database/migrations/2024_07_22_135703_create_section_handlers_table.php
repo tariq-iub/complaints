@@ -12,7 +12,7 @@ class CreateSectionHandlersTable extends Migration
             $table->id();
             $table->unsignedBigInteger('section_id');
             $table->unsignedBigInteger('user_id');
-            $table->boolean('is_head')->default(false);
+            $table->boolean('is_head')->default(true);
             $table->softDeletes();
             $table->timestamps();
         });

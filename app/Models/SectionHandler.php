@@ -16,7 +16,9 @@ class SectionHandler extends Model
         'user_id',
         'is_heard',
     ];
-
+    protected $casts = [
+        'is_head' => 'boolean', // Cast this attribute as a boolean
+    ];
     public function section()
     {
         return $this->belongsTo(Section::class);

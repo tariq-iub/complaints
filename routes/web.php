@@ -21,12 +21,18 @@ Route::group(['middleware' => ['auth']], function ()
     Route::resource('/users', UserController::class)->except(['show']);
     Route::put('/users/status/{user}', [UserController::class, 'statusToggle'])->name('users.status');
     Route::put('/users/profile/{user}', [UserController::class, 'profile'])->name('users.profile');
+    Route::get('/user/activities', [UserController::class, 'activities'])->name('user.user-activities');
 
     Route::resource('/roles', RoleController::class);
     Route::resource('/menus', MenuController::class);
     Route::resource('/factories', FactoryController::class);
     Route::resource('/sections', SectionController::class);
     Route::resource('/handlers', HandlerController::class);
+    Route::get('/handlers/{id}/edit', [HandlerController::class, 'edit']);
+    Route::put('/handlers/{id}', [HandlerController::class, 'update'])->name('handlers.update');
+    Route::delete('/handlers/{handler}', [HandlerController::class, 'destroy'])->name('handlers.destroy');
+    // routes/web.php
+Route::get('/admin/menus', [MenuController::class, 'index'])->name('admin.menus.index');
 
     Route::get('/reports', function () {
         return view('reports.index');
