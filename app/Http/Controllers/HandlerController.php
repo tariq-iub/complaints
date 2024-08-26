@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Section;
 use App\Models\SectionHandler;
-use App\Models\User;
+use App\Models\Employee; // Update to use Employee model
 use Illuminate\Http\Request;
 
 class HandlerController extends Controller
@@ -15,9 +15,9 @@ class HandlerController extends Controller
     public function index()
     {
         $sections = Section::all();
-        $handlers = SectionHandler::with(['section', 'user'])->get();
-        $users = User::all();
-        return view('admin.handlers.index', compact('handlers', 'sections', 'users'));
+        $handlers = SectionHandler::with(['section', 'employee'])->get(); // Update to use employee
+        $employees = Employee::all(); // Update to fetch employees
+        return view('admin.handlers.index', compact('handlers', 'sections', 'employees')); // Pass employees to view
     }
 
     /**
@@ -36,13 +36,13 @@ class HandlerController extends Controller
         // Validate and process the request
         $validated = $request->validate([
             'section_id' => 'required|integer',
-            'user_id' => 'required|integer',
+            'employee_id' => 'required|integer', // Update to use employee_id
             'is_head' => 'required|boolean',
         ]);
 
         // Create or update the handler
         $handler = SectionHandler::updateOrCreate(
-            ['section_id' => $validated['section_id'], 'user_id' => $validated['user_id']],
+            ['section_id' => $validated['section_id'], 'employee_id' => $validated['employee_id']], // Update to use employee_id
             ['is_head' => $validated['is_head']]
         );
 
@@ -71,12 +71,12 @@ class HandlerController extends Controller
     public function edit($id)
     {
         $handler = SectionHandler::findOrFail($id);
-        $users = User::all();
+        $employees = Employee::all(); // Fetch employees
         $sections = Section::all();
 
         return response()->json([
             'handler' => $handler,
-            'users' => $users,
+            'employees' => $employees, // Update to use employees
             'sections' => $sections,
         ]);
     }
@@ -87,21 +87,19 @@ class HandlerController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            
-            'user_id' => 'required|exists:users,id',
+            'employee_id' => 'required|exists:employees,id', // Update to validate employee_id
             'is_head' => 'required|boolean',
-            'section_id' => 'required|exists:sections,id', // Validate section_id
+            'section_id' => 'required|exists:sections,id',
         ]);
 
         $handler = SectionHandler::findOrFail($id);
-        $handler->user_id = $request->input('user_id');
+        $handler->employee_id = $request->input('employee_id'); // Update to use employee_id
         $handler->is_head = $request->input('is_head');
-        $handler->section_id = $request->input('section_id'); // Update section_id
+        $handler->section_id = $request->input('section_id');
         $handler->save();
 
         return response()->json(['success' => true]);
     }
-
 
     /**
      * Remove the specified resource from storage.
@@ -113,4 +111,5 @@ class HandlerController extends Controller
 
         return response()->json(['success' => true]);
     }
+    
 }

@@ -27,7 +27,7 @@ class SidebarMenuServiceProvider extends ServiceProvider
         Facades\View::composer('layouts.partial.sidebar', function (View $view)
         {
             $role = new Role();
-            if (Auth::check() && $role->isSuperAdmin())
+            if (Auth::check() && $role->isAdmin())
             {
                 $view->with('menus', Menu::with('subMenus')
                     ->where('status', true)
@@ -35,12 +35,12 @@ class SidebarMenuServiceProvider extends ServiceProvider
                     ->orderBy('display_order', 'asc')
                     ->get());
             }
-            elseif (Auth::check() && $role->isAdmin())
+            elseif (Auth::check() && $role->isClient())
             {
                 $view->with('menus', Menu::with('subMenus')
                     ->where('status', true)
                     ->whereNull('parent_id')
-                    ->where('level', 'admin')
+                    ->where('level', 'client')
                     ->orderBy('display_order', 'asc')
                     ->get());
             }
@@ -49,7 +49,7 @@ class SidebarMenuServiceProvider extends ServiceProvider
                 $view->with('menus', Menu::with('subMenus')
                     ->where('status', true)
                     ->whereNull('parent_id')
-                    ->where('level', 'client')
+                    ->where('level', 'employee')
                     ->orderBy('display_order', 'asc')
                     ->get());
             }

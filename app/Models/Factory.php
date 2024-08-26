@@ -15,8 +15,8 @@ class Factory extends Model
 
     protected $fillable = ['title', 'address', 'owner_name', 'email'];
 
-    public function sites()
+    public function sections()
     {
-        return $this->hasMany(Site::class);
+        return $this->hasMany(Section::class);
     }
 }

@@ -13,19 +13,20 @@ class SectionHandler extends Model
 
     protected $fillable = [
         'section_id',
-        'user_id',
-        'is_heard',
+        'employee_id', // Update to use employee_id
+        'is_head',
     ];
     protected $casts = [
-        'is_head' => 'boolean', // Cast this attribute as a boolean
+        'is_head' => 'boolean',
     ];
     public function section()
     {
         return $this->belongsTo(Section::class);
     }
 
-    public function user()
+    public function employee() // Update to use employee relationship
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Employee::class);
     }
 }
+

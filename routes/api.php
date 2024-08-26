@@ -25,3 +25,5 @@ Route::post('/section_handlers', [HandlerController::class, 'store']);
 Route::get('/factories', [FactoryController::class, 'fetch']);
 // Route::post('/factory-users', [FactoryUserController::class, 'store'])->name('api.factory-users.store');
 Route::get('/section_handlers/{section}', [SectionController::class, 'fetch'])->name('handler.fetch');
+Route::get('/api/section_handlers/{id}', [HandlerController::class, 'getSectionHandlers']);
+

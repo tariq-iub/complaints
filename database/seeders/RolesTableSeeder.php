@@ -18,17 +18,17 @@ class RolesTableSeeder extends Seeder
 
         DB::table('roles')->insert([
             [
-                'title' => 'Super Admin',
-                'created_at' => $now,
-                'updated_at' => $now,
-            ],
-            [
                 'title' => 'Admin',
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
             [
                 'title' => 'Client',
+                'created_at' => $now,
+                'updated_at' => $now,
+            ],
+            [
+                'title' => 'Employee',
                 'created_at' => $now,
                 'updated_at' => $now,
             ],

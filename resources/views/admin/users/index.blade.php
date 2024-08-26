@@ -10,7 +10,7 @@
         </ol>
     </nav>
 
-    <h2 class="text-bold text-body-emphasis mb-5">Users</h2>
+    <h2 class="text-bold text-body-emphasis mb-5">Users List</h2>
     <div id="users" data-list='{"valueNames":["user","email","status","role"],"page":10,"pagination":true}'>
         <div class="row align-items-center justify-content-between g-3 mb-4">
             <div class="col col-auto">
@@ -24,8 +24,6 @@
 
             <div class="col-auto">
                 <div class="d-flex align-items-center">
-                    <button class="btn btn-link text-body me-4 px-0">
-                        <span class="fa-solid fa-file-export fs-9 me-2"></span>Export</button>
                     <a class="btn btn-primary" href="{{ route('users.create') }}">
                         <span class="fas fa-plus me-2"></span>Add user
                     </a>

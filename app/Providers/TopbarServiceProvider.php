@@ -24,7 +24,7 @@ class TopbarServiceProvider extends ServiceProvider
     {
         Facades\View::composer('layouts.partial.topbar', function (View $view)
         {
-            $view->with('factories', Factory::with('sites')->get());
+            $view->with('factories', Factory::with('sections')->get());
         });
     }
 }

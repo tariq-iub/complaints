@@ -4,23 +4,23 @@
     <nav class="mb-3" aria-label="breadcrumb">
         <ol class="breadcrumb mb-0">
             <li class="breadcrumb-item"><a href="{{ url('/home') }}">Home</a></li>
-            <li class="breadcrumb-item active">Sections</li>
+            <li class="breadcrumb-item active">Employees</li>
         </ol>
     </nav>
 
     <div class="mb-5">
-        <h2 class="text-bold text-body-emphasis">Sections</h2>
+        <h2 class="text-bold text-body-emphasis">Employees</h2>
         <p class="text-body-tertiary lead">
-            Manage sections in factories.
+            Manage employees in factories.
         </p>
     </div>
 
-    <div id="sections" data-list='{"valueNames":["title","factory","address"],"page":10,"pagination":true}'>
+    <div id="employees" data-list='{"valueNames":["name","designation","email","mobile"],"page":10,"pagination":true}'>
         <div class="row align-items-center justify-content-between g-3 mb-4">
             <div class="col col-auto">
                 <div class="search-box">
                     <form class="position-relative">
-                        <input class="form-control search-input search" type="search" placeholder="Search sections"
+                        <input class="form-control search-input search" type="search" placeholder="Search employees"
                                aria-label="Search"/>
                         <span class="fas fa-search search-box-icon"></span>
                     </form>
@@ -29,14 +29,9 @@
 
             <div class="col-auto">
                 <div class="d-flex align-items-center">
-                    <a class="btn btn-primary me-2" href="{{ route('sections.create') }}">
+                    <a class="btn btn-primary me-2" href="{{ route('employees.create') }}">
                         <span class="fas fa-plus me-2"></span>
-                        Add Section
-                    </a>
-
-                    <a class="btn btn-primary" href="{{ route('handlers.index') }}">
-                        <span class="fas fa-users me-2"></span>
-                        Manage Handlers
+                        Add Employee
                     </a>
                 </div>
             </div>
@@ -46,33 +41,37 @@
                 <table class="table table-sm fs-9 mb-0">
                     <thead>
                     <tr>
-                        <th class="sort align-middle" scope="col" data-sort="title" style="width:20%; min-width:200px;">
-                            SECTION TITLE
+                        <th class="sort align-middle" scope="col" data-sort="name" style="width:20%; min-width:200px;">
+                            NAME
                         </th>
-                        <th class="sort align-middle" scope="col" data-sort="factory" style="width:20%; min-width:200px;">
-                            FACTORY NAME
+                        <th class="sort align-middle" scope="col" data-sort="designation" style="width:20%; min-width:200px;">
+                            DESIGNATION
                         </th>
-                        <th class="sort align-middle pe-3" scope="col" data-sort="address" style="width:20%; min-width:200px;">
-                            FACTORY ADDRESS
+                        <th class="sort align-middle pe-3" scope="col" data-sort="email" style="width:20%; min-width:200px;">
+                            EMAIL
+                        </th>
+                        <th class="sort align-middle" scope="col" data-sort="mobile" style="width:20%; min-width:200px;">
+                            MOBILE
                         </th>
                         <th class="sort align-middle text-end" scope="col" style="width:21%; min-width:200px;">
                             ACTIONS
                         </th>
                     </tr>
                     </thead>
-                    <tbody class="list" id="sections-table-body">
-                    @foreach($sections as $section)
+                    <tbody class="list" id="employees-table-body">
+                    @foreach($employees as $employee)
                         <tr class="hover-actions-trigger btn-reveal-trigger position-static">
                             <td class="customer align-middle white-space-nowrap">
-                                <a class="d-flex align-items-center text-body text-hover-1000" href="#">
-                                    {{ $section->title }}
-                                </a>
+                                    {{ $employee->name }}
                             </td>
-                            <td class="factory align-middle white-space-nowrap">
-                                {{ $section->factory->title }}
+                            <td class="designation align-middle white-space-nowrap">
+                                {{ $employee->designation->title }}
                             </td>
                             <td class="email align-middle white-space-nowrap">
-                                {{ $section->factory->address }}
+                                {{ $employee->email }}
+                            </td>
+                            <td class="mobile align-middle white-space-nowrap">
+                                {{ $employee->mobile_no }}
                             </td>
                             <td class="actions align-middle text-end white-space-nowrap text-body-tertiary">
                                 <div class="btn-reveal-trigger position-static">
@@ -89,12 +88,12 @@
                                         </svg>
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-end py-2">
-                                        <a class="dropdown-item" href="{{ route('sections.edit', $section) }}">
+                                        <a class="dropdown-item" href="{{ route('employees.edit', $employee) }}">
                                             Edit
                                         </a>
 
                                         <div class="dropdown-divider"></div>
-                                        <form action="{{ route('sections.destroy', $section) }}" method="POST"
+                                        <form action="{{ route('employees.destroy', $employee) }}" method="POST"
                                               style="display:inline;">
                                             @csrf
                                             @method('DELETE')

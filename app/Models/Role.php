@@ -21,17 +21,17 @@ class Role extends Model
         return $this->belongsToMany(Menu::class, 'menus_roles');
     }
 
-    public function isSuperAdmin()
+    public function isAdmin()
     {
         return in_array(Auth::user()->role_id, [1]);
     }
 
-    public function isAdmin()
+    public function isClient()
     {
         return in_array(Auth::user()->role_id, [2]);
     }
 
-    public function isClient()
+    public function isEmployee()
     {
         return !in_array(Auth::user()->role_id, [1, 2]);
     }
