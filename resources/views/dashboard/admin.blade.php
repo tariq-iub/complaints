@@ -7,66 +7,81 @@
             <h5 class="text-body-tertiary fw-semibold">Here’s what’s going on at your business right now</h5>
         </div>
     </div>
-<div class="card-body p-0">
-    <div class="row g-0">
-        <div class="col-sm-6 col-lg-3">
-            <div class="card rounded-0 shadow-none m-0">
-                <div class="card-body text-center">
-                    <i class="fs-4 lh-1 uil uil-books text-primary-dark"></i>
-                    <h3><span>{{ $factories }}</span></h3>
-                    <p class="text-muted font-15 mb-0">Factories</p>
-                </div>
-            </div>
-        </div>
+<div class="row mb-3 gy-6">
+    <div class="col-12 col-xxl-2">
+        <div class="row align-items-center g-3 g-xxl-0 h-100 align-content-between">
+            <!-- Empty div removed if not used -->
 
-        <div class="col-sm-6 col-lg-3">
-            <div class="card rounded-0 shadow-none m-0 border-start border-light">
-                <div class="card-body text-center">
-                    <i class="fs-4 lh-1 uil uil-users-alt text-success-dark"></i>
-                    <h3><span>{{ $totalUsers }}</span></h3>
-                    <p class="text-muted font-15 mb-0">Members</p>
+            <div class="col-12 col-sm-6 col-md-3 col-lg-6 col-xl-3 col-xxl-12">
+                <div class="d-flex align-items-center">
+                    <span class="fs-4 lh-1 uil uil-users-alt text-success-dark"></span>
+                    <div class="ms-2">
+                        <div class="d-flex align-items-end">
+                            <h2 class="mb-0 me-2">{{ $totalUsers }}</h2>
+                            <span class="fs-7 fw-semibold text-body">Clients</span>
+                        </div>
+                        <p class="text-body-secondary fs-9 mb-0">System Registered</p>
+                    </div>
                 </div>
             </div>
-        </div>
+            <div class="col-12 col-sm-6 col-md-3 col-lg-6 col-xl-3 col-xxl-12">
+                <div class="d-flex align-items-center">
+                    <span class="fs-4 lh-1 uil uil-books text-primary-dark"></span>
+                    <div class="ms-2">
+                        <div class="d-flex align-items-end">
+                            <h2 class="mb-0 me-2">23</h2>
+                            <span class="fs-8 fw-semibold text-body">Factories</span>
+                        </div>
+                        <p class="text-body-secondary fs-9 mb-0" style="padding-left: 20px;">Registered By Clients</p>
+                    </div>
+                </div>
+            </div>
 
-        <div class="col-sm-6 col-lg-3">
-            <div class="card rounded-0 shadow-none m-0 border-start border-light">
-                <div class="card-body text-center">
-                    <i class="fs-4 lh-1 uil uil-invoice text-warning-dark"></i>
-                    <h3><span>23</span></h3>
-                    <p class="text-muted font-15 mb-0">Subscription Expire</p>
-                </div>
-            </div>
-        </div>
 
-        <div class="col-sm-6 col-lg-3">
-            <div class="card rounded-0 shadow-none m-0 border-start border-light">
-                <div class="card-body text-center">
-                    <i class="fs-4 lh-1 uil uil-refresh text-danger-dark"></i>
-                    <h3><span>3</span></h3>
-                    <p class="text-muted font-15 mb-0">Subscription Request</p>
+
+            <div class="col-12 col-sm-6 col-md-3 col-lg-6 col-xl-3 col-xxl-12">
+                <div class="d-flex align-items-center">
+                    <span class="fs-4 lh-1 uil uil-invoice text-warning-dark"></span>
+                    <div class="ms-2">
+                        <div class="d-flex align-items-end">
+                            <h2 class="mb-0 me-2">23</h2>
+                            <span class="fs-8 fw-semibold text-body">Subscription Expire</span>
+                        </div>
+                        <p class="text-body-secondary fs-9 mb-0" style="padding-left: 20px;">Expires Within This Month</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-md-3 col-lg-6 col-xl-3 col-xxl-12">
+                <div class="d-flex align-items-center">
+                    <span class="fs-4 lh-1 uil uil-refresh text-danger-dark"></span>
+                    <div class="ms-2">
+                        <div class="d-flex align-items-end">
+                            <h2 class="mb-0 me-2">3</h2>
+                            <span class="fs-8 fw-semibold text-body">Subscription Request</span>
+                        </div>
+                        <p class="text-body-secondary fs-9 mb-0">Fresh Start</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div> <!-- end row -->
+    </div>
 </div>
 
-<div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-body-emphasis pt-7 pb-3 border-y mt-4">
 
+<div class="mx-n9 px-4 mx-lg-n6 px-lg-6 bg-body-emphasis pt-7 pb-3 border-y mt-6">
     <div class="col-12">
         <!-- Buttons to switch views -->
         <div class="mb-3">
-
-            <div class="form-check form-switch mt-2">
-                <input class="form-check-input" id="monthView" type="checkbox" checked data-gantt-view="month">
-                <label class="form-check-label" for="monthView">Month View</label>
+            <div class="btn-group" role="group" data-gantt-scale="data-gantt-scale">
+                <input class="btn-check" id="monthView" type="radio" name="scaleView" value="month" checked>
+                <label class="btn btn-phoenix-secondary bg-body-highlight-hover fs-10 py-1 mb-0" for="monthView">Month View</label>
+                
+                <input class="btn-check" id="weekView" type="radio" name="scaleView" value="week">
+                <label class="btn btn-phoenix-secondary bg-body-highlight-hover fs-10 py-1 mb-0" for="weekView">Week View</label>
             </div>
-            <div class="form-check form-switch">
-                <input class="form-check-input" id="weekView" type="checkbox" data-gantt-view="week">
-                <label class="form-check-label" for="weekView">Week View</label>
-            </div>
-
         </div>   
+        
         <!-- Line Chart Section -->
         <div id="lineChart" style="width: 100%; height: 400px;"></div>
     </div>
@@ -90,7 +105,7 @@
             xAxis: {
                 type: 'category',
                 boundaryGap: false,
-                data: ['Week 1', 'Week 2', 'Week 3', 'Week 4'] // Default to monthly view initially
+                data: ['Week 1', 'Week 2', 'Week 3', 'Week 4'], // Default to monthly view initially
             },
             yAxis: {
                 type: 'value'
@@ -106,87 +121,24 @@
 
         myChart.setOption(option);
 
-        // Add event listeners for the checkboxes
+        // Add event listeners for the buttons
         document.getElementById('weekView').addEventListener('change', function () {
             if (this.checked) {
-                document.getElementById('monthView').checked = false; // Uncheck month view
                 option.xAxis.data = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
                 option.series[0].data = weekData;
-            } else {
-                // If the week view checkbox is unchecked, show the month view if it's still checked
-                if (document.getElementById('monthView').checked) {
-                    option.xAxis.data = ['Week 1', 'Week 2', 'Week 3', 'Week 4'];
-                    option.series[0].data = monthData;
-                }
+                myChart.setOption(option);
             }
-            myChart.setOption(option);
         });
 
         document.getElementById('monthView').addEventListener('change', function () {
             if (this.checked) {
-                document.getElementById('weekView').checked = false; // Uncheck week view
-                option.xAxis.data = ['Week 1', 'Week 2', 'Week 3', 'Week 4']; // Adjust as needed
+                option.xAxis.data = ['Week 1', 'Week 2', 'Week 3', 'Week 4'];
                 option.series[0].data = monthData;
-            } else {
-                // If the month view checkbox is unchecked, show the week view if it's still checked
-                if (document.getElementById('weekView').checked) {
-                    option.xAxis.data = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-                    option.series[0].data = weekData;
-                }
+                myChart.setOption(option);
             }
-            myChart.setOption(option);
         });
     });
 </script>
-
-
-    <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-body-emphasis pt-7 pb-3 border-y">
-        <div class="row">
-            <div class="col-12 col-xl-7 col-xxl-6">
-                <div class="row g-3 mb-3">
-                    <div class="col-12 col-md-6">
-                        <h3 class="text-body-emphasis text-nowrap">Issues Discovered</h3>
-                        <p class="text-body-tertiary mb-md-7">Newly found and yet to be solved</p>
-                        <div class="d-flex align-items-center justify-content-between">
-                            <p class="mb-0 fw-bold">Issue type </p>
-                            <p class="mb-0 fs-9">Total count <span class="fw-bold">257</span></p>
-                        </div>
-                        <hr class="bg-body-secondary mb-2 mt-2" />
-                        <div class="d-flex align-items-center mb-1"><span class="d-inline-block bg-info-light bullet-item me-2"></span>
-                            <p class="mb-0 fw-semibold text-body lh-sm flex-1">Product design</p>
-                            <h5 class="mb-0 text-body">78</h5>
-                        </div>
-                        <div class="d-flex align-items-center mb-1"><span class="d-inline-block bg-warning-light bullet-item me-2"></span>
-                            <p class="mb-0 fw-semibold text-body lh-sm flex-1">Development</p>
-                            <h5 class="mb-0 text-body">63</h5>
-                        </div>
-                        <div class="d-flex align-items-center mb-1"><span class="d-inline-block bg-danger-light bullet-item me-2"></span>
-                            <p class="mb-0 fw-semibold text-body lh-sm flex-1">QA &amp; Testing</p>
-                            <h5 class="mb-0 text-body">56</h5>
-                        </div>
-                        <div class="d-flex align-items-center mb-1"><span class="d-inline-block bg-success-light bullet-item me-2"></span>
-                            <p class="mb-0 fw-semibold text-body lh-sm flex-1">Customer queries</p>
-                            <h5 class="mb-0 text-body">36</h5>
-                        </div>
-                        <div class="d-flex align-items-center"><span class="d-inline-block bg-primary bullet-item me-2"></span>
-                            <p class="mb-0 fw-semibold text-body lh-sm flex-1">R &amp; D</p>
-                            <h5 class="mb-0 text-body">24</h5>
-                        </div><button class="btn btn-outline-primary mt-5">See Details<span class="fas fa-angle-right ms-2 fs-10 text-center"></span></button>
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <div class="position-relative mb-sm-4 mb-xl-0">
-                            <div class="echart-issue-chart" style="min-height:390px;width:100%"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-xl-5 col-xxl-6">
-                <h3>Project: eleven Progress</h3>
-                <p class="text-body-tertiary mb-0 mb-xl-3">Deadline &amp; progress</p>
-                <div class="echart-zero-burnout-chart" style="min-height:320px;width:100%"></div>
-            </div>
-        </div>
-    </div>
     <div class="mx-lg-n4 mt-3">
         <div class="row g-3">
             <div class="col-12 col-xl-6 col-xxl-7">
@@ -646,5 +598,7 @@
             </div>
         </div>
     </div>
-</div>
+    
+</div >
+
 @endsection
