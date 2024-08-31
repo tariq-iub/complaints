@@ -57,9 +57,10 @@ Route::prefix('client')->group(function () {
     Route::put('complaints/{complaint}', [ComplaintController::class, 'updateClient'])->name('client.complaints.update');
     Route::delete('complaints/{complaint}', [ComplaintController::class, 'destroyClient'])->name('client.complaints.destroy');
     Route::get('/complaints/{id}/timeline', [TimeLineController::class, 'show'])->name('timeline.show');
+    
 
 });
-    Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+
 Route::post('/tickets', [TicketController::class, 'store'])->name('tickets.store');
     Route::get('/reports', function () {
         return view('reports.index');

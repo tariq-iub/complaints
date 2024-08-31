@@ -29,7 +29,7 @@
                     <span class="fs-4 lh-1 uil uil-books text-primary-dark"></span>
                     <div class="ms-2">
                         <div class="d-flex align-items-end">
-                            <h2 class="mb-0 me-2">23</h2>
+                            <h2 class="mb-0 me-2">{{ $factories }}</h2>
                             <span class="fs-8 fw-semibold text-body">Factories</span>
                         </div>
                         <p class="text-body-secondary fs-9 mb-0" style="padding-left: 20px;">Registered By Clients</p>
@@ -563,13 +563,13 @@
                     <table class="table fs-9 mb-0 border-top border-translucent">
                         <thead>
                         <tr>
-                            <th class="sort white-space-nowrap align-middle ps-0" scope="col" data-sort="project" style="width:30%;">CLIENT NAME</th>
+                            <th class="sort white-space-nowrap align-middle ps-0" scope="col" data-sort="project" style="width:30%;">Client Name</th>
                             <th class="sort align-middle ps-3" scope="col" data-sort="assignees" style="width:10%;">Factories</th>
                             <th class="sort align-middle ps-3" scope="col" data-sort="start" style="width:10%;">Subscription Start Date</th>
                             <th class="sort align-middle ps-3" scope="col" data-sort="deadline" style="width:15%;">Subscription End Date</th>
-                            <th class="sort align-middle ps-3" scope="col" data-sort="calculation" style="width:12%;">CALCULATION</th>
-                            <th class="sort align-middle ps-3" scope="col" data-sort="projectprogress" style="width:5%;">PROGRESS</th>
-                            <th class="sort align-middle ps-8" scope="col" data-sort="status" style="width:10%;">STATUS</th>
+                            <th class="sort align-middle ps-3" scope="col" data-sort="calculation" style="width:12%;">Calculation</th>
+                            <th class="sort align-middle ps-3" scope="col" data-sort="projectprogress" style="width:5%;">Progress</th>
+                            <th class="sort align-middle ps-8" scope="col" data-sort="status" style="width:10%;">Status</th>
                             <th class="sort align-middle text-end" scope="col" style="width:10%;"></th>
                         </tr>
                         </thead>
@@ -598,7 +598,7 @@
             </div>
         </div>
     </div>
-    
+
 </div >
 
 @endsection
