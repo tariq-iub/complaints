@@ -22,6 +22,7 @@ return new class extends Migration
             $table->enum('level', ['admin', 'client'])->default('admin');
             $table->enum('status', ['active', 'inactive'])->default('active');
 
+
             $table->timestamps();
         });
     }
