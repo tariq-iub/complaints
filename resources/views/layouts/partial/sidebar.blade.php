@@ -3,18 +3,34 @@
         <!-- scrollbar removed-->
         <div class="navbar-vertical-content">
             <ul class="navbar-nav flex-column" id="navbarVerticalNav">
+
+                <li class="nav-item">
+                    <div class="nav-item-wrapper">
+                        <a class="nav-link label-1 {{ Route::is('home') ? 'active' : '' }}" href="{{ route('home') }}" role="button" data-bs-toggle="Dashboard" aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                                <span class="nav-link-icon">
+                                    <span data-feather="pie-chart"></span>
+                                </span>
+                                <span class="nav-link-text-wrapper">
+                                    <span class="nav-link-text">Home</span>
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                </li>
+                <p class="navbar-vertical-label">Modules</p>
+                <hr class="navbar-vertical-line">
+
                 @foreach($menus as $menu)
-                    @if(count($menu->subMenus))
+                    @if($menu->route == 'home') @continue; @endif
+                    @if(count($menu->submenus))
                         @php
                             $subMenuSelected = false;
-                            $subMenuSelected = Arr::first($menu->subMenus, function ($item, $key) {
+                            $subMenuSelected = Arr::first($menu->submenus, function ($item, $key) {
                                                     return Route::is($item->route);
                                                 });
                         @endphp
                         <li class="nav-item">
-                            <p class="navbar-vertical-label">Apps</p>
-                            <hr class="navbar-vertical-line">
-
                             <div class="nav-item-wrapper">
                                 <a class="nav-link dropdown-indicator label-1 {{ ($subMenuSelected) ? '' : 'collapsed' }}" href="#nv-{{ $menu->id }}" role="button"
                                    data-bs-toggle="collapse" aria-expanded="{{ ($subMenuSelected) ? 'true' : 'false' }}" aria-controls="nv-{{ $menu->id }}">
@@ -29,7 +45,7 @@
                                 <div class="parent-wrapper label-1">
                                     <ul class="nav parent collapse {{ ($subMenuSelected) ? 'show' : '' }}" data-bs-parent="#navbarVerticalCollapse" id="nv-{{ $menu->id }}">
                                         <li class="collapsed-nav-item-title d-none">{{ $menu->title }}</li>
-                                        @foreach($menu->subMenus as $item)
+                                        @foreach($menu->submenus as $item)
                                         <li class="nav-item">
                                             <a class="nav-link {{ Route::is($item->route) ? 'active' : '' }}" href="{{ route($item->route) }}">
                                                 <div class="d-flex align-items-center">

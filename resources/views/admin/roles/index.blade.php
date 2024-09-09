@@ -4,21 +4,21 @@
     <nav class="mb-3" aria-label="breadcrumb">
         <ol class="breadcrumb mb-0">
             <li class="breadcrumb-item"><a href="{{ url('/home') }}">Home</a></li>
-            <li class="breadcrumb-item active">Menus</li>
+            <li class="breadcrumb-item active">Roles</li>
         </ol>
     </nav>
 
     <div class="mb-5">
-        <h2 class="text-bold text-body-emphasis">Menus</h2>
-        <p class="text-body-tertiary lead">Manage the system menus.</p>
+        <h2 class="text-bold text-body-emphasis">Roles</h2>
+        <p class="text-body-tertiary lead">Manage the user roles.</p>
     </div>
 
-    <div id="menus" data-list='{"valueNames":["title","route","icon","parent_id","display_order","level","status"],"page":10,"pagination":true}'>
+    <div id="roles" data-list='{"valueNames":["title"],"page":10,"pagination":true}'>
         <div class="row align-items-center justify-content-between g-3 mb-4">
             <div class="col col-auto">
                 <div class="search-box">
                     <form class="position-relative">
-                        <input class="form-control search-input search" type="search" placeholder="Search menus" aria-label="Search"/>
+                        <input class="form-control search-input search" type="search" placeholder="Search roles" aria-label="Search"/>
                         <span class="fas fa-search search-box-icon"></span>
                     </form>
                 </div>
@@ -26,9 +26,9 @@
 
             <div class="col-auto">
                 <div class="d-flex align-items-center">
-                    <a class="btn btn-primary" href="{{ route('menus.create') }}">
+                    <a class="btn btn-primary" href="{{ route('roles.create') }}">
                         <span class="fas fa-plus me-2"></span>
-                        Add Menu
+                        Add Role
                     </a>
                 </div>
             </div>
@@ -40,49 +40,22 @@
                     <thead>
                     <tr>
                         <th class="sort align-middle" scope="col" data-sort="title" style="width:15%; min-width:150px;">Title</th>
-                        <th class="sort align-middle" scope="col" data-sort="route" style="width:15%; min-width:150px;">Route</th>
-                        <th class="sort align-middle" scope="col" data-sort="icon" style="width:10%; min-width:100px;">Icon</th>
-                        <th class="sort align-middle" scope="col" data-sort="parent_id" style="width:15%; min-width:150px;">Parent Menu</th>
-                        <th class="sort align-middle" scope="col" data-sort="display_order" style="width:10%;">Display Order</th>
-                        <th class="sort align-middle" scope="col" data-sort="level" style="width:10%;">Level</th>
-                        <th class="sort align-middle" scope="col" data-sort="status" style="width:3%;">Status</th>
-                        <th class="sort align-middle text-end" scope="col" style="width:10%;">Actions</th>
+                        <th class="sort align-middle" scope="col" data-sort="route" style="width:75%; min-width:200px;">Menus Attached</th>
+                        <th class="sort align-middle text-end" scope="col" style="width:10%;">Action</th>
                     </tr>
                     </thead>
-                    <tbody class="list" id="menus-table-body">
-                    @foreach($menus as $menu)
+                    <tbody class="list">
+                    @foreach($roles as $role)
                         <tr class="hover-actions-trigger btn-reveal-trigger position-static">
-                            <td class="align-middle ps-3">
-                                <h6 class="fw-semibold">{{ $menu->title }}</h6>
+                            <td class="align-middle ps-3 title">
+                                <h6 class="fw-semibold">{{ $role->title }}</h6>
                             </td>
                             <td class="align-middle">
-                                <a class="fw-semibold" href="{{ $menu->route }}">{{ $menu->route }}</a>
-                            </td>
-                            <td class="align-middle">
-                                @if($menu->icon)
-                                    <span data-feather="{{ $menu->icon }}"></span>
-                                    <span class="ms-2">
-                                        {{ $menu->icon }}
-                                    </span>
-                                @else
-                                    -
-                                @endif
-                            </td>
-                            <td class="align-middle">
-                                {{ $menu->parent_id ? $menu->parent->title : '-' }}
-                            </td>
-                            <td class="align-middle text-body">
-                                {{ $menu->display_order }}
-                            </td>
-                            <td class="align-middle text-body">
-                                {{ $menu->level }}
-                            </td>
-                            <td class="align-middle text-body">
-                                @if($menu->status)
-                                    <span class="badge bg-success">Active</span>
-                                @else
-                                    <span class="badge bg-danger">Inactive</span>
-                                @endif
+                                @forelse($role->menus as $menu)
+                                    <span class="badge badge-phoenix badge-phoenix-success">{{ $menu->title }}</span>
+                                @empty
+                                    <span class="text-warning">No menu is attached to this {{ $role->title }}.</span>
+                                @endforelse
                             </td>
                             <td class="align-middle text-end white-space-nowrap text-body-tertiary">
                                 <div class="btn-reveal-trigger position-static">
@@ -92,7 +65,7 @@
                                         </svg>
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-end py-2">
-                                        <a class="dropdown-item" href="{{ route('menus.edit', $menu->id) }}">Edit</a>
+                                        <a class="dropdown-item" href="{{ route('menus.edit', $role->id) }}">Edit</a>
                                     </div>
                                 </div>
                             </td>

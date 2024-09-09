@@ -12,6 +12,11 @@ class Menu extends Model
     use Loggable;
     protected $fillable = ['title'];
 
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'menus_roles');
+    }
+
     public function subMenus()
     {
         return $this->hasMany(Menu::class, 'parent_id');

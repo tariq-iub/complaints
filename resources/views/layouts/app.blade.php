@@ -1,80 +1,77 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+@include('layouts.partial.admin_head')
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+<main class="main" id="top">
+    @include('layouts.partial.sidebar')
+    @include('layouts.partial.navbar')
+    <div class="content">
+        @yield('content')
+        @include('layouts.partial.footer')
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-
-    <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
-</head>
-<body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
-
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
-
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
+        <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+            <div class="toast fade" role="alert" id="toast-message"
+                 aria-live="assertive" aria-atomic="true" data-bs-autohide="true">
+                <div class="toast-header">
+                    <strong class="me-auto">Notification</strong>
+                    <button class="btn ms-2 p-0" type="button" data-bs-dismiss="toast" aria-label="Close"><span class="uil uil-times fs-7"></span></button>
+                </div>
+                <div class="toast-body">
+                    {{ session('message') }}
                 </div>
             </div>
-        </nav>
-
-        <main class="py-4">
-            @yield('content')
-        </main>
+        </div>
     </div>
+</main>
+
+<!-- ===============================================-->
+<!--    JavaScripts-->
+<!-- ===============================================-->
+<script src="{{ asset('assets/vendors/popper/popper.min.js') }}"></script>
+<script src="{{ asset('assets/vendors/bootstrap/bootstrap.min.js') }}"></script>
+<script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
+<script src="{{ asset('assets/vendors/datatables/datatables.min.js') }}"></script>
+<script src="{{ asset('assets/vendors/anchorjs/anchor.min.js') }}"></script>
+<script src="{{ asset('assets/vendors/is/is.min.js') }}"></script>
+<script src="{{ asset('assets/vendors/fontawesome/all.min.js') }}"></script>
+<script src="{{ asset('assets/vendors/lodash/lodash.min.js') }}"></script>
+<script src="{{ asset('assets/js/polyfill.min58be.js') }}?features=window.scroll"></script>
+<script src="{{ asset('assets/vendors/list.js/list.min.js') }}"></script>
+<script src="{{ asset('assets/vendors/feather-icons/feather.min.js') }}"></script>
+<script src="{{ asset('assets/vendors/dayjs/dayjs.min.js') }}"></script>
+<script src="{{ asset('assets/vendors/choices/choices.min.js') }}"></script>
+<script src="{{ asset('assets/vendors/dhtmlx-gantt/dhtmlxgantt.js') }}"></script>
+<script src="{{ asset('assets/vendors/flatpickr/flatpickr.min.js') }}"></script>
+<script src="{{ asset('assets/js/jquery.mask.min.js') }}"></script>
+<script src="{{ asset('assets/js/phoenix.js') }}"></script>
+<script src="{{ asset('assets/vendors/echarts/echarts.min.js') }}"></script>
+<script src="{{ asset('assets/vendors/sweetalert2/sweetalert2.js') }}"></script>
+<script src="../assets/js/projectmanagement-dashboard.js"></script>
+
+@if(Session::has('message'))
+    <script>
+        Swal.fire({
+            title: 'Success',
+            text: '{{ Session::get('message') }}',
+            icon: 'success',
+            confirmButtonText: 'OK',
+            timer: 3000
+        })
+    </script>
+@endif
+
+@if(Session::has('error-message'))
+    <script>
+        Swal.fire({
+            title: 'Error',
+            text: '{{ Session::get('error-message') }}',
+            icon: 'error',
+            confirmButtonText: 'OK',
+            timer: 3000
+        })
+    </script>
+@endif
+
+<!-- Stacking JavaScript -->
+@stack('scripts')
+
 </body>
 </html>

@@ -26,33 +26,10 @@ class SidebarMenuServiceProvider extends ServiceProvider
     {
         Facades\View::composer('layouts.partial.sidebar', function (View $view)
         {
-            $role = new Role();
-            if (Auth::check() && $role->isAdmin())
-            {
-                $view->with('menus', Menu::with('subMenus')
-                    ->where('status', true)
-                    ->whereNull('parent_id')
-                    ->orderBy('display_order', 'asc')
-                    ->get());
-            }
-            elseif (Auth::check() && $role->isClient())
-            {
-                $view->with('menus', Menu::with('subMenus')
-                    ->where('status', true)
-                    ->whereNull('parent_id')
-                    ->where('level', 'client')
-                    ->orderBy('display_order', 'asc')
-                    ->get());
-            }
-            else
-            {
-                $view->with('menus', Menu::with('subMenus')
-                    ->where('status', true)
-                    ->whereNull('parent_id')
-                    ->where('level', 'employee')
-                    ->orderBy('display_order', 'asc')
-                    ->get());
-            }
+            $role = Auth::user()->role;
+            $menus = $role->getMenusSubjectToRole();
+
+            $view->with('menus', $menus);
         });
     }
 }

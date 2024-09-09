@@ -13,8 +13,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::all();
-        return $roles;
+        $roles = Role::with('menus')->get();
         return view('admin.roles.index', compact('roles'));
     }
 

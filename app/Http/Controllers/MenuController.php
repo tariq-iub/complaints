@@ -13,14 +13,13 @@ class MenuController extends Controller
      */
     public function index()
     {
-        // Fetch all menus
-        $menus = Menu::all();
-        
-        // Fetch all users
+        $menus = Menu::orderBy('display_order')->get();
         $users = User::all();
-        
-        // Pass both menus and users to the view
-        return view('admin.menus.index', compact('menus', 'users'));
+
+        return view(
+            'admin.menus.index',
+            compact('menus', 'users')
+        );
     }
 
     /**
@@ -32,7 +31,7 @@ class MenuController extends Controller
         return view('admin.menus.create', compact('menus'));
     }
 
-    
+
     public function store(Request $request)
     {
         $request->validate([
