@@ -101,7 +101,8 @@ class MenuController extends Controller
         $menu->delete();
         return redirect()->route('menus.index');
     }
-        public function linkUser(Request $request)
+
+    public function linkUser(Request $request)
     {
         $validated = $request->validate([
             'menu_id' => 'required|exists:menus,id',
@@ -113,6 +114,14 @@ class MenuController extends Controller
         $user = User::findOrFail($validated['user_id']);
         $menu->users()->attach($user, ['access_level' => $validated['access_level']]);
 
+        return response()->json(['success' => true]);
+    }
+
+    public function updateOrder(Request $request)
+    {
+        $menu = Menu::find($request->input('id'));
+        $menu->display_order = $request->input('value');
+        $menu->save();
         return response()->json(['success' => true]);
     }
 }

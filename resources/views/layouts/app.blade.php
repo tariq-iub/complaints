@@ -12,7 +12,9 @@
                  aria-live="assertive" aria-atomic="true" data-bs-autohide="true">
                 <div class="toast-header">
                     <strong class="me-auto">Notification</strong>
-                    <button class="btn ms-2 p-0" type="button" data-bs-dismiss="toast" aria-label="Close"><span class="uil uil-times fs-7"></span></button>
+                    <button class="btn ms-2 p-0" type="button" data-bs-dismiss="toast" aria-label="Close">
+                        <span class="uil uil-times fs-7"></span>
+                    </button>
                 </div>
                 <div class="toast-body">
                     {{ session('message') }}

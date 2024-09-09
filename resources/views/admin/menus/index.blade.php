@@ -1,4 +1,4 @@
-@extends('layouts.powereye')
+@extends('layouts.app')
 
 @section('content')
     <nav class="mb-3" aria-label="breadcrumb">
@@ -71,8 +71,9 @@
                             <td class="align-middle">
                                 {{ $menu->parent_id ? $menu->parent->title : '-' }}
                             </td>
-                            <td class="align-middle text-body">
-                                {{ $menu->display_order }}
+                            <td class="align-middle">
+                                <input type="number" id="display_order" class="form-control form-control-sm"
+                                       value="{{ $menu->display_order }}" onclick="ChangeOrder(this, {{ $menu->id }})">
                             </td>
                             <td class="align-middle text-body">
                                 {{ $menu->level }}
@@ -121,3 +122,16 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        function ChangeOrder(ctrl, id)
+        {
+            let value = $(ctrl).val();
+            $.post("{{ url('/api/menus/update_order') }}", { id: id, value: value }, function(response) {
+                if(response.success == true)
+                    console.log('updated...');
+            });
+        }
+    </script>
+@endpush
