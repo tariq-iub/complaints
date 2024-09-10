@@ -27,7 +27,8 @@ class MenuController extends Controller
      */
     public function create()
     {
-        $menus = Menu::whereNull('parent_id')->get(); // Fetch parent menus
+        // Fetch parent menus
+        $menus = Menu::whereNull('parent_id')->get();
         return view('admin.menus.create', compact('menus'));
     }
 
@@ -40,7 +41,6 @@ class MenuController extends Controller
             'route' => 'nullable|string',
             'parent_id' => 'nullable|exists:menus,id',
             'display_order' => 'nullable|integer',
-            'level' => 'required|in:admin,client',
             'status' => 'required|boolean',
         ]);
 
@@ -50,7 +50,6 @@ class MenuController extends Controller
             'route' => $request->input('route'),
             'parent_id' => $request->input('parent_id'),
             'display_order' => $request->input('display_order', 0),
-            'level' => $request->input('level'),
             'status' => $request->input('status'),
         ]);
 
@@ -79,13 +78,11 @@ class MenuController extends Controller
             'status' => 'required|boolean',
         ]);
 
-        // Update the menu fields
         $menu->title = $request->input('title');
         $menu->icon = $request->input('icon');
         $menu->parent_id = $request->input('parent_id');
         $menu->status = (bool) $request->input('status');
-        $menu->level = $request->input('level'); // Add this line for updating level
-        // Save the changes
+
         $menu->save();
 
         // Redirect to the index route
@@ -107,7 +104,6 @@ class MenuController extends Controller
         $validated = $request->validate([
             'menu_id' => 'required|exists:menus,id',
             'user_id' => 'required|exists:users,id',
-            'access_level' => 'required|in:owner,employee',
         ]);
 
         $menu = Menu::findOrFail($validated['menu_id']);
