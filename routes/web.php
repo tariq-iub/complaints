@@ -28,6 +28,7 @@ Route::group(['middleware' => ['auth']], function ()
 
     Route::resource('/roles', RoleController::class);
     Route::resource('/menus', MenuController::class);
+    Route::put('/menus/{menu}', [MenuController::class, 'toggleStatus'])->name('menus.toggle');
     Route::resource('/factories', FactoryController::class);
     Route::resource('/sections', SectionController::class);
     Route::get('/sections/{section}/handlers', [HandlerController::class, 'showHandlers'])->name('section-handlers.show');

@@ -95,9 +95,14 @@
                                     <div class="dropdown-menu dropdown-menu-end py-2">
                                         <a class="dropdown-item" href="{{ route('menus.edit', $menu->id) }}">Edit</a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item text-danger" href="javascript:void(0)" onclick="ToggleStatus({{ $menu->id }})">
+                                        <a class="dropdown-item text-danger" href="javascript:void(0)" onclick="document.getElementById('toggle-form{{ $menu->id }}').submit();">
                                             Toggle Status
                                         </a>
+                                        <form method="POST" action="{{ route('menus.toggle', $menu->id) }}"
+                                              class="d-none" id="toggle-form{{$menu->id}}">
+                                            @csrf
+                                            @method('PUT')
+                                        </form>
                                     </div>
                                 </div>
                             </td>
