@@ -94,10 +94,10 @@
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-end py-2">
                                         <a class="dropdown-item" href="{{ route('menus.edit', $menu->id) }}">Edit</a>
-{{--                                        <div class="dropdown-divider"></div>--}}
-{{--                                        <a class="dropdown-item text-danger" href="javascript:void(0)" onclick="ToggleStatus({{ $menu->id }})">--}}
-{{--                                            Toggle Status--}}
-{{--                                        </a>--}}
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item text-danger" href="javascript:void(0)" onclick="ToggleStatus({{ $menu->id }})">
+                                            Toggle Status
+                                        </a>
                                     </div>
                                 </div>
                             </td>
