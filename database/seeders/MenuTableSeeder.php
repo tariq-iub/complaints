@@ -86,7 +86,7 @@ class MenuTableSeeder extends Seeder
                 'title' => 'User Logs',
                 'icon' => null,
                 'url' => null,
-                'route' => 'user.user-activities',
+                'route' => 'users.user-activities',
                 'parent_id' => 4,
                 'display_order' => 6,
                 'status' => true,
