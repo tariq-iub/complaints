@@ -29,7 +29,7 @@ class Role extends Model
 
     public function getMenusSubjectToRole()
     {
-        $ids = $this->menus()->pluck('menus.id')->toArray();
+        $ids = $this->menus()->where('status', 'active')->pluck('menus.id')->toArray();
         return $this->menus()
             ->whereNull('parent_id')
             ->with('submenus', function($query) use($ids) {

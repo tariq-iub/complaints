@@ -75,7 +75,7 @@
                                        value="{{ $menu->display_order }}" onclick="ChangeOrder(this, {{ $menu->id }})">
                             </td>
                             <td class="align-middle text-body status">
-                                @if($menu->status == 'active')
+                                @if($menu->status)
                                     <div class="badge badge-phoenix badge-phoenix-success">
                                         <span class="fw-bold">Active</span>
                                     </div>

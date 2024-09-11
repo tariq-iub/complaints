@@ -33,14 +33,11 @@ Route::group(['middleware' => ['auth']], function ()
     Route::get('/sections/{section}/handlers', [HandlerController::class, 'showHandlers'])->name('section-handlers.show');
     Route::resource('/handlers', HandlerController::class);
 
-    // routes/web.php
-    Route::get('/admin/menus', [MenuController::class, 'index'])->name('admin.menus.index');
-    Route::resource('employees', EmployeeController::class);
-    Route::resource('complaints', ComplaintController::class);
-    Route::get('complaints/{complaint}/timeline', [ComplaintController::class, 'show'])->name('complaints.timeline.show');
-    Route::get('complaints/{complaint}/edit', [ComplaintController::class, 'edit'])->name('complaints.edit');
+    Route::resource('/employees', EmployeeController::class);
+    Route::resource('/complaints', ComplaintController::class);
+    Route::get('/complaints/{complaint}/timeline', [ComplaintController::class, 'show'])->name('complaints.timeline.show');
+    Route::get('/complaints/{complaint}/edit', [ComplaintController::class, 'edit'])->name('complaints.edit');
 
-    Route::put('complaints/{complaint}', [ComplaintController::class, 'update'])->name('complaints.update');
     Route::get('/employee/complaints', [EmployeeComplaintController::class, 'index'])->name('employee.complaints.index');
 
     Route::prefix('client')->group(function () {

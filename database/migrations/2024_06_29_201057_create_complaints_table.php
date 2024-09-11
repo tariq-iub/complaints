@@ -15,16 +15,16 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('detail')->nullable();
-            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
+            $table->unsignedBigInteger('category_id');
             $table->enum('priority', ['normal', 'urgent', 'express']);
-            $table->unsignedBigInteger('section_id')->nullable(); // Allow NULL values
-            $table->unsignedBigInteger('handler_id')->nullable(); // Changed to unsignedBigInteger
+            $table->unsignedBigInteger('section_id')->nullable();
+            $table->unsignedBigInteger('handler_id')->nullable();
             $table->string('photo_path')->nullable();
             $table->timestamp('section_added_at')->nullable();
             $table->timestamp('handler_assigned_at')->nullable();
             $table->timestamp('resolved_at')->nullable();
+            $table->softDeletes();
             $table->timestamps();
-            $table->softDeletes();        
         });
     }
 

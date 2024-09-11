@@ -58,8 +58,8 @@
                 <div class="mb-5">
                     <h5>Status</h5>
                     <select class="form-select" id="status" name="status" required>
-                        <option value="1" {{ (old('status') == 'active') ? 'selected' : '' }}>Active</option>
-                        <option value="0" {{ (old('status') == 'inactive') ? 'selected' : '' }}>Inactive</option>
+                        <option value="1" {{ old('status') ? 'selected' : '' }}>Active</option>
+                        <option value="0" {{ old('status') ? 'selected' : '' }}>Inactive</option>
                     </select>
                 </div>
             </div>
