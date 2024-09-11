@@ -99,7 +99,7 @@ class MenuController extends Controller
         return redirect()->route('menus.index');
     }
 
-    public function toggleStatus(Menu $menu)
+    public function statusToggle(Menu $menu)
     {
         $menu->status = !$menu->status;
         $menu->save();
