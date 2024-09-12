@@ -16,23 +16,40 @@ class Role extends Model
         'title',
     ];
 
+    protected $user;
+    public function __construct()
+    {
+        $this->user = Auth::user();
+    }
+
     public function menus()
     {
         return $this->belongsToMany(Menu::class, 'menus_roles');
     }
 
-    public function isAdmin()
+    public function getMenusSubjectToRole()
     {
-        return in_array(Auth::user()->role_id, [1]);
+        $ids = $this->menus()->where('status', true)->pluck('menus.id')->toArray();
+        return $this->menus()
+            ->whereNull('parent_id')
+            ->with('submenus', function($query) use($ids) {
+                $query->whereIn('id', $ids);
+            })->orderBy('display_order')
+            ->get();
     }
 
-    public function isClient()
+    public function isAdmin() : bool
     {
-        return in_array(Auth::user()->role_id, [2]);
+        return $this->user->role_id == 1;
     }
 
-    public function isEmployee()
+    public function isClient() : bool
     {
-        return !in_array(Auth::user()->role_id, [1, 2]);
+        return $this->user->role_id == 2;
+    }
+
+    public function isEmployee() : bool
+    {
+        return $this->user->role_id == 3;
     }
 }

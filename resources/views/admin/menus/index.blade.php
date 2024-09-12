@@ -1,4 +1,4 @@
-@extends('layouts.powereye')
+@extends('layouts.app')
 
 @section('content')
     <nav class="mb-3" aria-label="breadcrumb">
@@ -10,10 +10,10 @@
 
     <div class="mb-5">
         <h2 class="text-bold text-body-emphasis">Menus</h2>
-        <p class="text-body-tertiary lead">Manage the menu items.</p>
+        <p class="text-body-tertiary lead">Manage the system menus.</p>
     </div>
 
-    <div id="menus" data-list='{"valueNames":["title","route","icon","parent_id","display_order","level","status"],"page":10,"pagination":true}'>
+    <div id="menus" data-list='{"valueNames":["title","route","icon","parent_id","display_order","status"],"page":10,"pagination":true}'>
         <div class="row align-items-center justify-content-between g-3 mb-4">
             <div class="col col-auto">
                 <div class="search-box">
@@ -44,7 +44,6 @@
                         <th class="sort align-middle" scope="col" data-sort="icon" style="width:10%; min-width:100px;">Icon</th>
                         <th class="sort align-middle" scope="col" data-sort="parent_id" style="width:15%; min-width:150px;">Parent Menu</th>
                         <th class="sort align-middle" scope="col" data-sort="display_order" style="width:10%;">Display Order</th>
-                        <th class="sort align-middle" scope="col" data-sort="level" style="width:10%;">Level</th>
                         <th class="sort align-middle" scope="col" data-sort="status" style="width:3%;">Status</th>
                         <th class="sort align-middle text-end" scope="col" style="width:10%;">Actions</th>
                     </tr>
@@ -52,33 +51,38 @@
                     <tbody class="list" id="menus-table-body">
                     @foreach($menus as $menu)
                         <tr class="hover-actions-trigger btn-reveal-trigger position-static">
-                            <td class="align-middle ps-3">
+                            <td class="align-middle ps-3 title">
                                 <h6 class="fw-semibold">{{ $menu->title }}</h6>
                             </td>
-                            <td class="align-middle">
+                            <td class="align-middle route">
                                 <a class="fw-semibold" href="{{ $menu->route }}">{{ $menu->route }}</a>
                             </td>
-                            <td class="align-middle">
+                            <td class="align-middle icon">
                                 @if($menu->icon)
-                                    <i class="{{ $menu->icon }}"></i> <span class="ms-2">{{ $menu->icon }}</span>
+                                    <span data-feather="{{ $menu->icon }}"></span>
+                                    <span class="ms-2">
+                                        {{ $menu->icon }}
+                                    </span>
                                 @else
-                                    None
+                                    -
                                 @endif
                             </td>
+                            <td class="align-middle parent_id">
+                                {{ $menu->parent_id ? $menu->parent->title : '-' }}
+                            </td>
                             <td class="align-middle">
-                                {{ $menu->parent_id ? $menu->parent->title : 'None' }}
+                                <input type="number" id="display_order" class="form-control form-control-sm" style="width: 100px;"
+                                       value="{{ $menu->display_order }}" onclick="ChangeOrder(this, {{ $menu->id }})">
                             </td>
-                            <td class="align-middle text-body">
-                                {{ $menu->display_order }}
-                            </td>
-                            <td class="align-middle text-body">
-                                {{ $menu->level }}
-                            </td>
-                            <td class="align-middle text-body">
+                            <td class="align-middle text-body status">
                                 @if($menu->status)
-                                    <span class="badge bg-success">Active</span>
+                                    <div class="badge badge-phoenix badge-phoenix-success">
+                                        <span class="fw-bold">Active</span>
+                                    </div>
                                 @else
-                                    <span class="badge bg-danger">Inactive</span>
+                                    <div class="badge badge-phoenix badge-phoenix-danger">
+                                        <span class="fw-bold">Blocked</span>
+                                    </div>
                                 @endif
                             </td>
                             <td class="align-middle text-end white-space-nowrap text-body-tertiary">
@@ -90,6 +94,15 @@
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-end py-2">
                                         <a class="dropdown-item" href="{{ route('menus.edit', $menu->id) }}">Edit</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item text-danger" href="javascript:void(0)" onclick="document.getElementById('toggle-form{{ $menu->id }}').submit();">
+                                            Toggle Status
+                                        </a>
+                                        <form method="POST" action="{{ route('menus.toggle', $menu->id) }}"
+                                              class="d-none" id="toggle-form{{$menu->id}}">
+                                            @csrf
+                                            @method('PUT')
+                                        </form>
                                     </div>
                                 </div>
                             </td>
@@ -118,3 +131,16 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        function ChangeOrder(ctrl, id)
+        {
+            let value = $(ctrl).val();
+            $.post("{{ url('/api/menus/update_order') }}", { id: id, value: value }, function(response) {
+                if(response.success == true)
+                    console.log('updated...');
+            });
+        }
+    </script>
+@endpush

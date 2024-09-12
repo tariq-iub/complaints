@@ -13,8 +13,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::all();
-        return $roles;
+        $roles = Role::with('menus')->get();
         return view('admin.roles.index', compact('roles'));
     }
 
@@ -61,5 +60,48 @@ class RoleController extends Controller
     public function destroy(Role $role)
     {
         //
+    }
+
+    public function attachModalBody($id)
+    {
+        $role = Role::find($id);
+        $ids = $role->menus()
+            ->where('status', true)
+            ->pluck('menus.id')
+            ->toArray();
+
+        $menus = Menu::whereNotIn('id', $ids)->where('id', '!=', 1)->get();
+        return response()->json([
+            'list' => view('admin.roles.partials.menus_attachment_body',['menus' => $menus])->render(),
+            'message' => 'success',
+        ]);
+    }
+
+    public function detachModalBody($id)
+    {
+        $role = Role::find($id);
+        $menus = $role->menus()
+            ->where('status', true)
+            ->where('menus.id', '!=', 1)
+            ->get();
+
+        return response()->json([
+            'list' => view('admin.roles.partials.menus_attachment_body',['menus' => $menus])->render(),
+            'message' => 'success',
+        ]);
+    }
+
+    public function roleMenuAttachment(Request $request)
+    {
+        $role = Role::find($request->input('role_id'));
+        $role->menus()->attach($request->input('menu_ids'));
+        return redirect()->route('roles.index')->with(['message' => 'Menus has been attached successfully.']);
+    }
+
+    public function roleMenuDetachment(Request $request)
+    {
+        $role = Role::find($request->input('role_id'));
+        $role->menus()->detach($request->input('menu_ids'));
+        return redirect()->route('roles.index')->with(['message' => 'Menus has been detached successfully.']);
     }
 }

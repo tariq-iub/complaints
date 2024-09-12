@@ -19,10 +19,7 @@ return new class extends Migration
             $table->string('route')->nullable();
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->integer('display_order')->default(0);
-            $table->enum('level', ['admin', 'client'])->default('admin');
-            $table->enum('status', ['active', 'inactive'])->default('active');
-
-
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }

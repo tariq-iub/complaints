@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('role_id');
             $table->unsignedBigInteger('menu_id');
-            $table->timestamps();
 
             $table->foreign('role_id')->references('id')->on('roles');
             $table->foreign('menu_id')->references('id')->on('menus');

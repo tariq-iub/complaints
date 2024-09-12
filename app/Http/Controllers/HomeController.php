@@ -16,19 +16,44 @@ class HomeController extends Controller
 
     public function index()
     {
-        if (Auth::user()) {
-            if (in_array(Auth::user()->role->id, [1])) {
-                // Fetch the total number of users
-                $totalUsers = User::count();
-                $factories = Factory::count();
-                $clients = User::where('role_id', 2)->get();
-                return view('dashboard.admin', compact('totalUsers', 'factories', 'clients'));
-            } else {
-                return view('dashboard.client');
-            }
-        } else {
+        if (!Auth::check()) {
             return redirect()->route('login');
         }
+
+        $user = Auth::user();
+
+        if($user->role->isAdmin())
+        {
+            $totalUsers = User::count();
+            $factories = Factory::count();
+            $clients = User::where('role_id', 2)->get();
+
+            return view(
+                'admin.dashboard',
+                compact('totalUsers', 'factories', 'clients')
+            );
+        }
+        elseif($user->role->isClient())
+        {
+            $totalUsers = User::count();
+            $factories = Factory::count();
+            $clients = User::where('role_id', 2)->get();
+
+            return view(
+                'client.dashboard',
+                compact('totalUsers', 'factories', 'clients')
+            );
+        }
+        else {
+            $totalComplaints = 0;
+            return view(
+                'employee.dashboard',
+                compact('totalComplaints')
+            );
+        }
+
+
+
     }
 }
 
