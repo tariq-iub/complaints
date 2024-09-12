@@ -166,8 +166,8 @@
 
                         <div class="overflow-auto border-top border-translucent scrollbar" style="height: 10rem;">
                             <ul class="nav d-flex flex-column mb-2 pb-1">
-                                <li class="nav-item"><a class="nav-link px-3" href="#!"> <span class="me-2 text-body" data-feather="user"></span><span>Profile</span></a></li>
-                                <li class="nav-item"><a class="nav-link px-3" href="#!"><span class="me-2 text-body" data-feather="pie-chart"></span>Dashboard</a></li>
+                                <li class="nav-item"><a class="nav-link px-3" href="{{ url('/home') }}"><span class="me-2 text-body" data-feather="pie-chart"></span>Dashboard</a></li>
+                                <li class="nav-item"><a class="nav-link px-3" href="{{ route('users.profile', Auth::user()->id) }}"> <span class="me-2 text-body" data-feather="user"></span><span>Profile</span></a></li>
                                 <li class="nav-item"><a class="nav-link px-3" href="#!"> <span class="me-2 text-body" data-feather="lock"></span>Posts &amp; Activity</a></li>
                                 <li class="nav-item"><a class="nav-link px-3" href="#!"> <span class="me-2 text-body" data-feather="settings"></span>Settings &amp; Privacy </a></li>
                                 <li class="nav-item"><a class="nav-link px-3" href="#!"> <span class="me-2 text-body" data-feather="help-circle"></span>Help Center</a></li>
