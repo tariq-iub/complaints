@@ -134,16 +134,8 @@ class UserController extends Controller
 
     public function statusToggle(User $user)
     {
-        if($user->status)
-        {
-            $user->status = false;
-            $user->save();
-        }
-        else
-        {
-            $user->status = true;
-            $user->save();
-        }
+        $user->status = !$user->status;
+        $user->save();
 
         return redirect('/users');
     }
