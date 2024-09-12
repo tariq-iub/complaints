@@ -14,6 +14,7 @@ use App\Http\Controllers\TimeLineController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\EmployeeComplaintController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FaqCategoryController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -60,6 +61,7 @@ Route::prefix('client')->group(function () {
     
 
 });
+Route::get('/faq', [FaqCategoryController::class, 'index'])->name('client.faq.index');
 
 Route::post('/tickets', [TicketController::class, 'store'])->name('tickets.store');
     Route::get('/reports', function () {
