@@ -6,6 +6,7 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use DataTables;
@@ -19,29 +20,7 @@ class UserController extends Controller
     */
     public function index()
     {
-//        if ($request->ajax()) {
-//            $data = User::select('*');
-//            return DataTables::of($data)
-//                ->addColumn('user_name', function($row) {
-//                    return view('admin.users.partials.user_name', compact('row'));
-//                })
-//                ->addColumn('email', function($row) {
-//                    return view('admin.users.partials.email', compact('row'));
-//                })
-//                ->addColumn('role', function($row) {
-//                    return $row->role->title;
-//                })
-//                ->addColumn('status', function($row) {
-//                    return view('admin.users.partials.status', compact('row'));
-//                })
-//                ->addColumn('action', function($row) {
-//                    return view('admin.users.partials.action', compact('row'));
-//                })
-//                ->rawColumns(['user_name', 'email', 'role', 'status', 'action'])
-//                ->make(true);
-//        }
-
-        $users = User::paginate(10);
+        $users = User::paginate(50);
         return view('admin.users.index', compact('users'));
     }
 
@@ -64,7 +43,7 @@ class UserController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'role_id' => ['required', 'integer', 'exists:roles,id'],
-            'photo_path' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
+            'photo_path' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:1024'],
         ]);
 
         if ($validator->fails()) {
@@ -105,15 +84,26 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $validator = Validator::make($request->all(), [
+        $validating_array = [
             'name' => ['required', 'string', 'max:255'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
             'role_id' => ['required', 'integer', 'exists:roles,id'],
-            'photo_path' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
-        ]);
+            'photo_path' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:1024'],
+        ];
+
+        if($request->input('changePasswordCheck') != null)
+        {
+            $validating_array['password'] = ['required', 'string', 'min:8', 'confirmed'];
+        }
+
+        $validator = Validator::make($request->all(), $validating_array);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        if($user->photo_path != null)
+        {
+            Storage::delete($user->photo_path);
         }
 
         $photoPath = null;

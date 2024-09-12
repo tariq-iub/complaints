@@ -33,7 +33,7 @@
 
         <div class="mx-n4 mx-lg-n6 px-4 px-lg-6 mb-9 bg-body-emphasis border-y mt-2 position-relative top-1">
             <div class="table-responsive scrollbar ms-n1 ps-1">
-                <table class="table table-sm fs-9 mb-0">
+                <table class="table table-sm fs-9 mt-3">
                 <thead>
                 <tr>
                     <th class="sort align-middle" scope="col" data-sort="user" style="width:30%; min-width:200px;">User</th>
@@ -98,9 +98,7 @@
                             <div class="btn-reveal-trigger position-static">
                                 <button class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs-10"
                                         type="button" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent">
-                                    <svg class="svg-inline--fa fa-ellipsis fs-10" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="ellipsis" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="">
-                                        <path fill="currentColor" d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z"></path>
-                                    </svg>
+                                    <span class="fas fa-ellipsis fs-10"></span>
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-end py-2" style="">
                                     <a class="dropdown-item" href="{{ route('users.edit', $row->id) }}">Edit</a>
@@ -124,26 +122,8 @@
                 </table>
             </div>
 
-            <div class="row align-items-center justify-content-between py-2 pe-0 fs-9">
-                <div class="col-auto d-flex">
-                    <p class="mb-0 d-none d-sm-block me-3 fw-semibold text-body" data-list-info="data-list-info"></p>
-                    <a class="fw-semibold" href="javascript:void(0)" data-list-view="*">
-                        View all<span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span>
-                    </a>
-                    <a class="fw-semibold d-none" href="javascript:void(0)" data-list-view="less">
-                        View Less<span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span>
-                    </a>
-                </div>
-                <div class="col-auto d-flex">
-                    <button class="page-link" data-list-pagination="prev">
-                        <span class="fas fa-chevron-left"></span>
-                    </button>
-                    <ul class="mb-0 pagination"></ul>
-                    <button class="page-link pe-0" data-list-pagination="next">
-                        <span class="fas fa-chevron-right"></span>
-                    </button>
-                </div>
-            </div>
+            {{ $users->links('pagination::bootstrap-5') }}
+
         </div>
     </div>
 @endsection

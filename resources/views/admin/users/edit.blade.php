@@ -1,4 +1,4 @@
-@extends('layouts.powereye')
+@extends('layouts.app')
 
 @section('content')
     <nav class="mb-3" aria-label="breadcrumb">
@@ -21,12 +21,22 @@
             </div>
             <div class="col-auto">
                 <a href="{{ route('users.index') }}" class="btn btn-phoenix-secondary me-2 mb-2 mb-sm-0">Discard</a>
-                <button class="btn btn-primary mb-2 mb-sm-0" type="submit">Edit user</button>
+                <button class="btn btn-primary mb-2 mb-sm-0" type="submit">Update User</button>
             </div>
         </div>
 
         <div class="row g-5">
             <div class="col-12 col-xl-8">
+                <div class="mb-5">
+                    <h5>User Image</h5>
+                    <input type="file" class="form-control" id="photo_path" name="photo_path" accept="image/*">
+                    @if($errors->has('photo_path'))
+                        <div class="text-danger small">
+                            {{ $errors->first('photo_path') }}
+                        </div>
+                    @endif
+                </div>
+
                 <div class="mb-5">
                     <h5>User Name</h5>
                     <input class="form-control" type="text" name="name" placeholder="User Name"
@@ -39,34 +49,60 @@
                 </div>
 
                 <div class="mb-5">
-                    <h5>User Image</h5>
-                    <input type="file" class="form-control" id="photo_path" name="photo_path" accept="image/*">
-                    @if($errors->has('photo_path'))
-                        <div class="text-danger small">
-                            {{ $errors->first('photo_path') }}
-                        </div>
-                    @endif
-                </div>
-
-                <div class="mb-5">
                     <h5>Email</h5>
-                    <input class="form-control" type="email" placeholder="User Email"
-                           value="{{ old('email', $user->email) }}" readonly>
-                </div>
-
-                <div class="mb-5">
-                    <h5>Password</h5>
-                    <input class="form-control" type="password" name="password" placeholder="Password" required>
-                    @if($errors->has('password'))
+                    <input class="form-control" type="email" id="email" name="email" placeholder="User Email"
+                           value="{{ old('email', $user->email) }}" required>
+                    @if($errors->has('email'))
                         <div class="text-danger small">
-                            {{ $errors->first('password') }}
+                            {{ $errors->first('email') }}
                         </div>
                     @endif
                 </div>
 
                 <div class="mb-5">
-                    <h5>Confirm Password</h5>
-                    <input class="form-control" type="password" name="password_confirmation" placeholder="Confirm Password">
+                    <h5>CNIC No</h5>
+                    <input class="form-control" type="text" id="cnic_no" name="cnic_no" placeholder="CNIC No"
+                           value="{{ old('cnic_no', $user->cnic_no) }}" required>
+                    @if($errors->has('cnic_no'))
+                        <div class="text-danger small">
+                            {{ $errors->first('cnic_no') }}
+                        </div>
+                    @endif
+                </div>
+
+                <div class="mb-5">
+                    <h5>Contact No</h5>
+                    <input class="form-control" type="text" id="contact_no" name="contact_no" placeholder="Contact No"
+                           value="{{ old('contact_no', $user->contact_no) }}" required>
+                    @if($errors->has('contact_no'))
+                        <div class="text-danger small">
+                            {{ $errors->first('contact_no') }}
+                        </div>
+                    @endif
+                </div>
+
+                <div class="card p-3">
+                    <div class="form-check form-switch mb-3">
+                        <input type="checkbox" class="form-check-input" id="changePasswordCheck" name="changePasswordCheck" {{ is_null(old('changePasswordCheck')) ? '' : 'checked' }}>
+                        <label class="form-check-label" for="changePasswordCheck">Change Password</label>
+                    </div>
+
+                    <div class="mb-5">
+                        <h5>Password</h5>
+                        <input class="form-control" type="password" name="password" placeholder="Password"
+                               value="{{ old('password') }}">
+                        @if($errors->has('password'))
+                            <div class="text-danger small">
+                                {{ $errors->first('password') }}
+                            </div>
+                        @endif
+                    </div>
+
+                    <div class="mb-5">
+                        <h5>Confirm Password</h5>
+                        <input class="form-control" type="password" name="password_confirmation" placeholder="Confirm Password"
+                               value="{{ old('password_confirmation') }}">
+                    </div>
                 </div>
 
             </div>
@@ -85,7 +121,9 @@
                                             <select class="form-select" aria-label="role" name="role_id" required>
                                                 <option value="">Select Role</option>
                                                 @foreach($roles as $row)
-                                                    <option value="{{ $row->id }}" {{ $user->role_id == $row->id ? 'selected' : '' }}>{{ $row->title }}</option>
+                                                    <option value="{{ $row->id }}" {{ ($user->role_id == $row->id) ? 'selected' : '' }}>
+                                                        {{ $row->title }}
+                                                    </option>
                                                 @endforeach
                                             </select>
                                             @if($errors->has('role_id'))
@@ -99,10 +137,9 @@
                                         <div class="mb-4">
                                             <div class="d-flex flex-wrap mb-2">
                                                 <h5 class="mb-0 text-body-highlight me-2">Status</h5>
-                                            </div>
-                                            <select class="form-select mb-3" aria-label="status" name="status" required>
-                                                <option value="1" {{ $user->status == 1 ? 'selected' : '' }}>Active</option>
-                                                <option value="0" {{ $user->status == 0 ? 'selected' : '' }}>Blocked</option>
+                                            </div><select class="form-select mb-3" aria-label="status" name="status" required>
+                                                <option value="1" {{ ($user->status) ? 'selected' : '' }}>Active</option>
+                                                <option value="0" {{ (!$user->status) ? 'selected' : '' }}>Blocked</option>
                                             </select>
                                         </div>
                                     </div>
@@ -117,5 +154,20 @@
 @endsection
 
 @push('scripts')
+    <script>
+        $(document).ready(function()
+        {
+            $('#cnic_no').mask('00000-0000000-0', {
+                translation: {
+                    '0': { pattern: /[0-9]/, optional: false }
+                }
+            });
 
+            $('#contact_no').mask('0000-0000000', {
+                translation: {
+                    '0': { pattern: /[0-9]/, optional: false }
+                }
+            });
+        });
+    </script>
 @endpush

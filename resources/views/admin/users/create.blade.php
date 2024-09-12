@@ -20,22 +20,12 @@
             </div>
             <div class="col-auto">
                 <a href="{{ route('users.index') }}" class="btn btn-phoenix-secondary me-2 mb-2 mb-sm-0">Discard</a>
-                <button class="btn btn-primary mb-2 mb-sm-0" type="submit">Add user</button>
+                <button class="btn btn-primary mb-2 mb-sm-0" type="submit">Add User</button>
             </div>
         </div>
 
         <div class="row g-5">
             <div class="col-12 col-xl-8">
-                <div class="mb-5">
-                    <h5>User Name</h5>
-                    <input class="form-control" type="text" name="name" placeholder="User Name"
-                           value="{{ old('name') }}" required>
-                    @if($errors->has('name'))
-                    <div class="text-danger small">
-                        {{ $errors->first('name') }}
-                    </div>
-                    @endif
-                </div>
                 <div class="mb-5">
                     <h5>User Image</h5>
                     <input type="file" class="form-control" id="photo_path" name="photo_path" accept="image/*">
@@ -47,12 +37,45 @@
                 </div>
 
                 <div class="mb-5">
+                    <h5>User Name</h5>
+                    <input class="form-control" type="text" name="name" placeholder="User Name"
+                           value="{{ old('name') }}" required>
+                    @if($errors->has('name'))
+                    <div class="text-danger small">
+                        {{ $errors->first('name') }}
+                    </div>
+                    @endif
+                </div>
+
+                <div class="mb-5">
                     <h5>Email</h5>
-                    <input class="form-control" type="email" name="email" placeholder="User Email"
+                    <input class="form-control" type="email" id="email" name="email" placeholder="User Email"
                            value="{{ old('email') }}" required>
                     @if($errors->has('email'))
                         <div class="text-danger small">
                             {{ $errors->first('email') }}
+                        </div>
+                    @endif
+                </div>
+
+                <div class="mb-5">
+                    <h5>CNIC No</h5>
+                    <input class="form-control" type="text" id="cnic_no" name="cnic_no" placeholder="CNIC No"
+                           value="{{ old('cnic_no') }}" required>
+                    @if($errors->has('cnic_no'))
+                        <div class="text-danger small">
+                            {{ $errors->first('cnic_no') }}
+                        </div>
+                    @endif
+                </div>
+
+                <div class="mb-5">
+                    <h5>Contact No</h5>
+                    <input class="form-control" type="text" id="contact_no" name="contact_no" placeholder="Contact No"
+                           value="{{ old('contact_no') }}" required>
+                    @if($errors->has('contact_no'))
+                        <div class="text-danger small">
+                            {{ $errors->first('contact_no') }}
                         </div>
                     @endif
                 </div>
@@ -121,5 +144,20 @@
 @endsection
 
 @push('scripts')
+    <script>
+        $(document).ready(function()
+        {
+            $('#cnic_no').mask('00000-0000000-0', {
+                translation: {
+                    '0': { pattern: /[0-9]/, optional: false }
+                }
+            });
 
+            $('#contact_no').mask('0000-0000000', {
+                translation: {
+                    '0': { pattern: /[0-9]/, optional: false }
+                }
+            });
+        });
+    </script>
 @endpush
