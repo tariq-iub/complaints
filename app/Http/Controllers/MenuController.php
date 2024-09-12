@@ -13,7 +13,7 @@ class MenuController extends Controller
      */
     public function index()
     {
-        $menus = Menu::orderBy('display_order')->get();
+        $menus = Menu::orderBy('display_order')->paginate(50);
         $users = User::all();
 
         return view(
