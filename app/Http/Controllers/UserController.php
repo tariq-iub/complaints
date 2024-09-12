@@ -101,9 +101,8 @@ class UserController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        if($user->photo_path != null)
-        {
-            Storage::delete($user->photo_path);
+        if (Storage::disk('public')->exists($user->photo_path)) {
+            Storage::disk('public')->delete($user->photo_path);
         }
 
         $photoPath = null;
