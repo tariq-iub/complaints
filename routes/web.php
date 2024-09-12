@@ -11,11 +11,8 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\TimeLineController;
 use App\Http\Controllers\EmployeeComplaintController;
-<<<<<<< HEAD
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FaqCategoryController;
-=======
->>>>>>> d55b93413d7bb851e2a5d91d836889dc867164a3
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
