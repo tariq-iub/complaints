@@ -1,4 +1,4 @@
-@extends('layouts.powereye')
+@extends('layouts.app')
 
 @section('content')
     <nav class="mb-3" aria-label="breadcrumb">
@@ -44,10 +44,10 @@
                     <th class="no-sort align-middle text-end">Action</th>
                 </tr>
                 </thead>
-                <tbody class="list" id="users-table-body">
+                <tbody class="list">
                 @foreach($users as $row)
                     <tr class="hover-actions-trigger btn-reveal-trigger position-static">
-                        <td class="user align-middle white-space-nowrap name">
+                        <td class="align-middle white-space-nowrap user">
                             @php
                                 $src = url('assets/img/users/user1.png');
                                 if($row->photo_path)
@@ -63,7 +63,7 @@
                                 </div>
                             </div>
                         </td>
-                        <td class="email align-middle white-space-nowrap">
+                        <td class="email align-middle white-space-nowrap email">
                             <a class="fw-semibold" href="mailto:{{ $row->email }}">
                                 {{ $row->email }}
                                 @if($row->email_verified_at == null)
@@ -74,7 +74,15 @@
                             </a>
                         </td>
 
-                        <td class="status align-middle">
+                        <td class="align-middle contact_no">
+                            {{ $row->contact_no }}
+                        </td>
+
+                        <td class="role align-middle white-space-nowrap text-body role">
+                            {{ $row->role->title }}
+                        </td>
+
+                        <td class="align-middle status">
                             @if($row->status)
                                 <span class="badge badge-phoenix badge-phoenix-success">
                                     <span class="badge-label">Active</span>
@@ -86,20 +94,6 @@
                             @endif
                         </td>
 
-                        <td class="status align-middle">
-                            @if($row->status)
-                                <span class="badge badge-phoenix badge-phoenix-success">
-                                    <span class="badge-label">Active</span>
-                                </span>
-                            @else
-                                <span class="badge badge-phoenix badge-phoenix-warning">
-                                    <span class="badge-label">Blocked</span>
-                                </span>
-                            @endif
-                        </td>
-                        <td class="role align-middle white-space-nowrap text-body">
-                            {{ $row->role->title }}
-                        </td>
                         <td class="last_active align-middle text-end white-space-nowrap text-body-tertiary">
                             <div class="btn-reveal-trigger position-static">
                                 <button class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs-10"
@@ -120,7 +114,7 @@
                                         <input type="hidden" name="status" value="{{ !$row->status }}">
                                     </form>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item text-danger" href="#!">Remove</a>
+                                    <a class="dropdown-item text-danger" href="javascript:void(0)">Remove</a>
                                 </div>
                             </div>
                         </td>

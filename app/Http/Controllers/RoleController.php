@@ -18,6 +18,14 @@ class RoleController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        return view('admin.roles.create');
+    }
+
+    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
@@ -38,12 +46,7 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
-        $menus =  Menu::where('status', true)
-            ->orderBy('id', 'asc')
-            ->orderBy('display_order', 'asc')
-            ->get();
-
-        return view('admin.roles.edit', compact('role', 'menus'));
+        return view('admin.roles.edit', compact('role'));
     }
 
     /**
@@ -51,7 +54,8 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
-        return $request;
+        $role->update($request->all());
+        return redirect()->route('roles.index');
     }
 
     /**

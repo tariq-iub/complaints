@@ -65,7 +65,7 @@
                                         </svg>
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-end py-2">
-                                        <a class="dropdown-item" href="{{ route('menus.edit', $role->id) }}">Edit</a>
+                                        <a class="dropdown-item" href="{{ route('roles.edit', $role->id) }}">Edit</a>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="javascript:void(0)" data-id="{{ $role->id }}" data-bs-toggle="modal" data-bs-target="#menuAttachmentModal">Attach Manus</a>
                                         <a class="dropdown-item" href="javascript:void(0)" data-id="{{ $role->id }}" data-bs-toggle="modal" data-bs-target="#menuDetachmentModal">Detach Manus</a>
