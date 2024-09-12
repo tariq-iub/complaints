@@ -45,10 +45,10 @@
                         <th class="sort align-middle" scope="col" data-sort="parent_id" style="width:15%; min-width:150px;">Parent Menu</th>
                         <th class="sort align-middle" scope="col" data-sort="display_order" style="width:10%;">Display Order</th>
                         <th class="sort align-middle" scope="col" data-sort="status" style="width:3%;">Status</th>
-                        <th class="sort align-middle text-end" scope="col" style="width:10%;">Actions</th>
+                        <th class="sort align-middle text-end" scope="col" style="width:10%;">Action</th>
                     </tr>
                     </thead>
-                    <tbody class="list" id="menus-table-body">
+                    <tbody class="list">
                     @foreach($menus as $menu)
                         <tr class="hover-actions-trigger btn-reveal-trigger position-static">
                             <td class="align-middle ps-3 title">
@@ -74,13 +74,13 @@
                                 <input type="number" id="display_order" class="form-control form-control-sm" style="width: 100px;"
                                        value="{{ $menu->display_order }}" onclick="ChangeOrder(this, {{ $menu->id }})">
                             </td>
-                            <td class="align-middle text-body status">
+                            <td class="py-2 align-middle text-body status">
                                 @if($menu->status)
-                                    <div class="badge badge-phoenix badge-phoenix-success">
+                                    <div class="badge fs-10 badge-phoenix badge-phoenix-success">
                                         <span class="fw-bold">Active</span>
                                     </div>
                                 @else
-                                    <div class="badge badge-phoenix badge-phoenix-danger">
+                                    <div class="badge fs-10 badge-phoenix badge-phoenix-danger">
                                         <span class="fw-bold">Blocked</span>
                                     </div>
                                 @endif
@@ -88,15 +88,13 @@
                             <td class="align-middle text-end white-space-nowrap text-body-tertiary">
                                 <div class="btn-reveal-trigger position-static">
                                     <button class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs-10" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <svg class="svg-inline--fa fa-ellipsis fs-10" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="ellipsis" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                                            <path fill="currentColor" d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z"></path>
-                                        </svg>
+                                        <span class="fas fa-ellipsis fs-10"></span>
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-end py-2">
                                         <a class="dropdown-item" href="{{ route('menus.edit', $menu->id) }}">Edit</a>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item text-danger" href="javascript:void(0)" onclick="document.getElementById('toggle-form{{ $menu->id }}').submit();">
-                                            Toggle Status
+                                            Change Status
                                         </a>
                                         <form method="POST" action="{{ route('menus.toggle', $menu->id) }}"
                                               class="d-none" id="toggle-form{{$menu->id}}">

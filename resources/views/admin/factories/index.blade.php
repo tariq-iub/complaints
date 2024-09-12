@@ -1,4 +1,4 @@
-@extends('layouts.powereye')
+@extends('layouts.app')
 
 @section('content')
     <nav class="mb-3" aria-label="breadcrumb">
@@ -20,8 +20,7 @@
             <div class="col col-auto">
                 <div class="search-box">
                     <form class="position-relative">
-                        <input class="form-control search-input search" type="search" placeholder="Search users"
-                               aria-label="Search"/>
+                        <input class="form-control search-input search" type="search" placeholder="Search factory" aria-label="Search"/>
                         <span class="fas fa-search search-box-icon"></span>
                     </form>
                 </div>
@@ -29,12 +28,8 @@
 
             <div class="col-auto">
                 <div class="d-flex align-items-center">
-                    <button class="btn btn-link text-body me-4 px-0">
-                        <span class="fa-solid fa-file-export fs-9 me-2"></span>Export
-                    </button>
                     <a class="btn btn-primary" href="{{ route('factories.create') }}">
-                        <span class="fas fa-plus me-2"></span>
-                        Add Factory
+                        <span class="fas fa-plus me-2"></span>Add Factory
                     </a>
                 </div>
             </div>
@@ -45,28 +40,27 @@
                 <table class="table table-sm fs-9 mb-0">
                     <thead>
                     <tr>
-                        <th class="sort align-middle" scope="col" data-sort="title" style="width:15%; min-width:200px;">
-                            FACTORY DETAILS
+                        <th class="sort align-middle title" scope="col" data-sort="title" style="width:15%; min-width:200px;">
+                            Factory Detail
                         </th>
-                        <th class="sort align-middle" scope="col" data-sort="owner_name" style="width:15%; min-width:200px;">
-                            OWNER DETAILS
+                        <th class="sort align-middle owner_name" scope="col" data-sort="owner_name" style="width:15%; min-width:200px;">
+                            Owner Name
                         </th>
-                        <th class="sort align-middle pe-3" scope="col" data-sort="email"
-                            style="width:20%; min-width:200px;">
-                            EMAIL
+                        <th class="sort align-middle pe-3 email" scope="col" data-sort="email" style="width:20%; min-width:200px;">
+                            Email
                         </th>
-                        <th class="sort align-middle" scope="col" data-sort="contact_no" style="width:10%;">
-                            CONTACT
+                        <th class="sort align-middle contact_no" scope="col" data-sort="contact_no" style="width:10%;">
+                            Contact No
                         </th>
                         <th class="sort align-middle text-end" scope="col" style="width:21%;  min-width:200px;">
-                            ACTIONS
+                            Action
                         </th>
                     </tr>
                     </thead>
-                    <tbody class="list" id="users-table-body">
+                    <tbody class="list">
                     @foreach($factories as $row)
                         <tr class="hover-actions-trigger btn-reveal-trigger position-static">
-                            <td class="align-middle ps-3">
+                            <td class="align-middle ps-3 title">
                                 <a class="d-flex align-items-center text-body text-hover-1000 ps-0" href="#">
                                     <h6 class="fw-semibold">
                                         {{ $row->title }}
@@ -292,92 +286,92 @@
                 });
         });
 
-        document.addEventListener('DOMContentLoaded', function () {
-            var linkUserModal = document.getElementById('linkUserModal');
-            if (linkUserModal) {
-                linkUserModal.addEventListener('show.bs.modal', function (event) {
-                    var button = event.relatedTarget; // Button that triggered the modal
-                    var factoryId = button.getAttribute('data-factory-id'); // Extract info from data-* attributes
-                    var modalBodyInput = linkUserModal.querySelector('#factory_id');
-                    console.log("Factory ID set in modal:", factoryId); // Debugging line
-                    if (modalBodyInput) {
-                        modalBodyInput.value = factoryId; // Set the factory ID in the hidden input field
-                    }
-                });
+        {{--document.addEventListener('DOMContentLoaded', function () {--}}
+        {{--    var linkUserModal = document.getElementById('linkUserModal');--}}
+        {{--    if (linkUserModal) {--}}
+        {{--        linkUserModal.addEventListener('show.bs.modal', function (event) {--}}
+        {{--            var button = event.relatedTarget; // Button that triggered the modal--}}
+        {{--            var factoryId = button.getAttribute('data-factory-id'); // Extract info from data-* attributes--}}
+        {{--            var modalBodyInput = linkUserModal.querySelector('#factory_id');--}}
+        {{--            console.log("Factory ID set in modal:", factoryId); // Debugging line--}}
+        {{--            if (modalBodyInput) {--}}
+        {{--                modalBodyInput.value = factoryId; // Set the factory ID in the hidden input field--}}
+        {{--            }--}}
+        {{--        });--}}
 
-                var linkUserForm = document.getElementById('linkUserForm');
-                if (linkUserForm) {
-                    linkUserForm.addEventListener('submit', function(e) {
-                        e.preventDefault(); // Prevent the default form submission
+        {{--        var linkUserForm = document.getElementById('linkUserForm');--}}
+        {{--        if (linkUserForm) {--}}
+        {{--            linkUserForm.addEventListener('submit', function(e) {--}}
+        {{--                e.preventDefault(); // Prevent the default form submission--}}
 
-                        let formData = new FormData(this);
-                        console.log("Form Data:", Array.from(formData.entries())); // Debugging line
+        {{--                let formData = new FormData(this);--}}
+        {{--                console.log("Form Data:", Array.from(formData.entries())); // Debugging line--}}
 
-                        fetch("{{ route('api.factory-users.store') }}", {
-                            method: 'POST',
-                            body: formData,
-                            headers: {
-                                'X-CSRF-TOKEN': document.querySelector('input[name=_token]').value,
-                                'Accept': 'application/json'
-                            }
-                        })
-                            .then(response => response.json())
-                            .then(data => {
-                                // handle the response
-                                if (data.success) {
-                                    // Close the modal and refresh the page or show a success message
-                                    alert('User linked successfully!');
-                                    location.reload(); // Reload the page to reflect changes
-                                } else {
-                                    // Show error message
-                                    alert('Error linking user: ' + data.message);
-                                }
-                            })
-                            .catch(error => {
-                                // Handle error
-                                console.error('Error:', error);
-                                alert('An error occurred while linking the user.');
-                            });
-                    });
-                } else {
-                    console.error('Form element #linkUserForm not found.');
-                }
-            } else {
-                console.error('Modal element #linkUserModal not found.');
-            }
-        });
+        {{--                fetch("{{ route('api.factory-users.store') }}", {--}}
+        {{--                    method: 'POST',--}}
+        {{--                    body: formData,--}}
+        {{--                    headers: {--}}
+        {{--                        'X-CSRF-TOKEN': document.querySelector('input[name=_token]').value,--}}
+        {{--                        'Accept': 'application/json'--}}
+        {{--                    }--}}
+        {{--                })--}}
+        {{--                    .then(response => response.json())--}}
+        {{--                    .then(data => {--}}
+        {{--                        // handle the response--}}
+        {{--                        if (data.success) {--}}
+        {{--                            // Close the modal and refresh the page or show a success message--}}
+        {{--                            alert('User linked successfully!');--}}
+        {{--                            location.reload(); // Reload the page to reflect changes--}}
+        {{--                        } else {--}}
+        {{--                            // Show error message--}}
+        {{--                            alert('Error linking user: ' + data.message);--}}
+        {{--                        }--}}
+        {{--                    })--}}
+        {{--                    .catch(error => {--}}
+        {{--                        // Handle error--}}
+        {{--                        console.error('Error:', error);--}}
+        {{--                        alert('An error occurred while linking the user.');--}}
+        {{--                    });--}}
+        {{--            });--}}
+        {{--        } else {--}}
+        {{--            console.error('Form element #linkUserForm not found.');--}}
+        {{--        }--}}
+        {{--    } else {--}}
+        {{--        console.error('Modal element #linkUserModal not found.');--}}
+        {{--    }--}}
+        {{--});--}}
 
-        linkUserForm.addEventListener('submit', function(e) {
-            e.preventDefault(); // Prevent the default form submission
+        {{--linkUserForm.addEventListener('submit', function(e) {--}}
+        {{--    e.preventDefault(); // Prevent the default form submission--}}
 
-            let formData = new FormData(this);
-            console.log("Form Data:", Array.from(formData.entries())); // Debugging line
+        {{--    let formData = new FormData(this);--}}
+        {{--    console.log("Form Data:", Array.from(formData.entries())); // Debugging line--}}
 
-            fetch("{{ route('api.factory-users.store') }}", {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('input[name=_token]').value,
-                    'Accept': 'application/json'
-                }
-            })
-                .then(response => response.json())
-                .then(data => {
-                    // handle the response
-                    if (data.success) {
-                        // Close the modal and refresh the page or show a success message
-                        alert('User linked successfully!');
-                        location.reload(); // Reload the page to reflect changes
-                    } else {
-                        // Show error message
-                        alert('Error linking user: ' + data.message);
-                    }
-                })
-                .catch(error => {
-                    // Handle error
-                    console.error('Error:', error);
-                    alert('An error occurred while linking the user.');
-                });
-        });
+        {{--    fetch("{{ route('api.factory-users.store') }}", {--}}
+        {{--        method: 'POST',--}}
+        {{--        body: formData,--}}
+        {{--        headers: {--}}
+        {{--            'X-CSRF-TOKEN': document.querySelector('input[name=_token]').value,--}}
+        {{--            'Accept': 'application/json'--}}
+        {{--        }--}}
+        {{--    })--}}
+        {{--        .then(response => response.json())--}}
+        {{--        .then(data => {--}}
+        {{--            // handle the response--}}
+        {{--            if (data.success) {--}}
+        {{--                // Close the modal and refresh the page or show a success message--}}
+        {{--                alert('User linked successfully!');--}}
+        {{--                location.reload(); // Reload the page to reflect changes--}}
+        {{--            } else {--}}
+        {{--                // Show error message--}}
+        {{--                alert('Error linking user: ' + data.message);--}}
+        {{--            }--}}
+        {{--        })--}}
+        {{--        .catch(error => {--}}
+        {{--            // Handle error--}}
+        {{--            console.error('Error:', error);--}}
+        {{--            alert('An error occurred while linking the user.');--}}
+        {{--        });--}}
+        {{--});--}}
     </script>
 @endpush

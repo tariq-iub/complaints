@@ -18,6 +18,8 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
+            $table->string('cnic_no', 15)->nullable();
+            $table->string('contact_no', 15)->nullable();
             $table->string('photo_path')->nullable();
             $table->boolean('status')->default(true);
             $table->unsignedBigInteger('role_id')->default(1);

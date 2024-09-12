@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use App\Models\User;
-use App\Models\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use DataTables;
 
 class UserController extends Controller
 {
@@ -19,8 +19,29 @@ class UserController extends Controller
     */
     public function index()
     {
-        $users = User::all();
+//        if ($request->ajax()) {
+//            $data = User::select('*');
+//            return DataTables::of($data)
+//                ->addColumn('user_name', function($row) {
+//                    return view('admin.users.partials.user_name', compact('row'));
+//                })
+//                ->addColumn('email', function($row) {
+//                    return view('admin.users.partials.email', compact('row'));
+//                })
+//                ->addColumn('role', function($row) {
+//                    return $row->role->title;
+//                })
+//                ->addColumn('status', function($row) {
+//                    return view('admin.users.partials.status', compact('row'));
+//                })
+//                ->addColumn('action', function($row) {
+//                    return view('admin.users.partials.action', compact('row'));
+//                })
+//                ->rawColumns(['user_name', 'email', 'role', 'status', 'action'])
+//                ->make(true);
+//        }
 
+        $users = User::paginate(10);
         return view('admin.users.index', compact('users'));
     }
 

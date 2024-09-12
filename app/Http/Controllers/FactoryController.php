@@ -50,7 +50,7 @@ class FactoryController extends Controller
         $factory->fax = $request->input('fax');
         $factory->save();
 
-        return redirect(route('factories.index'))->with('message', 'Factory registration updated successfully.');
+        return redirect('factories.index')->with('message', 'Factory registration updated successfully.');
     }
 
     /**

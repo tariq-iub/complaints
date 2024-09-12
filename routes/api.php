@@ -28,5 +28,6 @@ Route::get('/factories', [FactoryController::class, 'fetch']);
 Route::get('/section_handlers/{section}', [SectionController::class, 'fetch'])->name('handler.fetch');
 Route::get('/api/section_handlers/{id}', [HandlerController::class, 'getSectionHandlers']);
 Route::post('/menus/update_order', [MenuController::class, 'updateOrder']);
+
 Route::get('/roles/attach_menus/{role}', [RoleController::class, 'attachModalBody']);
 Route::get('/roles/detach_menus/{role}', [RoleController::class, 'detachModalBody']);
