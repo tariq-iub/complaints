@@ -53,7 +53,9 @@ class MenuController extends Controller
             'status' => $request->input('status'),
         ]);
 
-        return redirect()->route('menus.index')->with('success', 'Menu created successfully.');
+        return redirect()
+            ->route('menus.index')
+            ->with('message', 'Menu created successfully.');
     }
 
     /**
@@ -62,7 +64,10 @@ class MenuController extends Controller
     public function edit(Menu $menu)
     {
         $parentMenus = (new Menu())->parentsOnly();
-        return view('admin.menus.edit', compact('menu', 'parentMenus'));
+        return view(
+            'admin.menus.edit',
+            compact('menu', 'parentMenus')
+        );
     }
 
     /**
@@ -70,23 +75,28 @@ class MenuController extends Controller
      */
     public function update(Request $request, Menu $menu)
     {
-        // Validate the request
         $request->validate([
             'title' => 'required|string',
             'icon' => 'nullable|string',
-            'parent_id' => 'nullable|integer',
+            'route' => 'nullable|string',
+            'parent_id' => 'nullable|exists:menus,id',
+            'display_order' => 'nullable|integer',
             'status' => 'required|boolean',
         ]);
 
         $menu->title = $request->input('title');
         $menu->icon = $request->input('icon');
+        $menu->route = $request->input('route');
         $menu->parent_id = $request->input('parent_id');
+        $menu->display_order = $request->input('display_order');
         $menu->status = (bool) $request->input('status');
 
         $menu->save();
 
         // Redirect to the index route
-        return redirect()->route('menus.index');
+        return redirect()
+            ->route('menus.index')
+            ->with('message', 'Menu updated successfully.');
     }
 
 
@@ -96,14 +106,18 @@ class MenuController extends Controller
     public function destroy(Menu $menu)
     {
         $menu->delete();
-        return redirect()->route('menus.index');
+        return redirect()
+            ->route('menus.index')
+            ->with('message', 'Menu deleted successfully.');
     }
 
     public function statusToggle(Menu $menu)
     {
         $menu->status = !$menu->status;
         $menu->save();
-        return redirect()->route('menus.index');
+        return redirect()
+            ->route('menus.index')
+            ->with('message', 'Menu status has changed successfully.');
     }
 
     public function linkUser(Request $request)

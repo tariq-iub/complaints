@@ -34,8 +34,8 @@
         </div>
 
         <div class="mx-n4 mx-lg-n6 px-4 px-lg-6 mb-9 bg-body-emphasis border-y mt-2 position-relative top-1">
-            <div class="table-responsive scrollbar ms-n1 ps-1">
-                <table class="table table-sm fs-9 mt-3">
+            <div class="table-responsive scrollbar ms-n1 ps-1 mt-3">
+                <table class="table table-sm fs-9">
                     <thead>
                     <tr>
                         <th class="sort align-middle" scope="col" data-sort="title" style="width:15%; min-width:150px;">Title</th>

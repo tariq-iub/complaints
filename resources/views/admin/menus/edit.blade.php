@@ -41,8 +41,8 @@
 
                 <div class="mb-5">
                     <h5>Icon</h5>
-                    <input type="text" class="form-control @error('icon') is-invalid @enderror" id="icon" name="icon"
-                           value="{{ old('icon', $menu->icon) }}">
+                    <input type="text" class="form-control @error('icon') is-invalid @enderror" id="icon"
+                           name="icon" value="{{ old('icon', $menu->icon) }}">
                     @error('icon')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -54,6 +54,17 @@
                     <h5>Route</h5>
                     <input type="text" class="form-control" id="route" name="route"
                            value="{{ old('route', $menu->route) }}">
+                </div>
+
+                <div class="mb-5">
+                    <h5>Display Order</h5>
+                    <input type="number" class="form-control @error('display_order') is-invalid @enderror" id="display_order" name="display_order"
+                           value="{{ old('display_order', $menu->display_order) }}">
+                    @error('display_order')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
                 </div>
 
                 <div class="mb-5">
