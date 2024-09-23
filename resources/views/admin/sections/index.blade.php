@@ -46,16 +46,19 @@
                 <table class="table table-sm fs-9 mb-0">
                     <thead>
                     <tr>
-                        <th class="sort align-middle" scope="col" data-sort="title" style="width:20%; min-width:200px;">
+                        <th class="sort align-middle" scope="col" data-sort="title" style="width:25%;">
                             SECTION TITLE
                         </th>
-                        <th class="sort align-middle" scope="col" data-sort="factory" style="width:20%; min-width:200px;">
+                        <th class="sort align-middle" scope="col" data-sort="factory" style="width:25%;">
                             FACTORY NAME
                         </th>
-                        <th class="sort align-middle pe-3" scope="col" data-sort="address" style="width:20%; min-width:200px;">
+                        <th class="sort align-middle pe-3" scope="col" data-sort="address" style="width:25%;">
                             FACTORY ADDRESS
                         </th>
-                        <th class="sort align-middle text-end" scope="col" style="width:21%; min-width:200px;">
+                       <th class="sort align-middle pe-3" scope="col" data-sort="address" style="width:25%;">
+                            CREATED AT
+                        </th>
+                        <th class="sort align-middle text-end" scope="col" style="width:21%;">
                             ACTIONS
                         </th>
                     </tr>
@@ -71,8 +74,10 @@
                             <td class="factory align-middle white-space-nowrap">
                                 {{ $section->factory->title }}
                             </td>
-                            <td class="email align-middle white-space-nowrap">
-                                {{ $section->factory->address }}
+                            <td class="email align-middle">
+                                <span class="text-truncate" style="display: inline-block; max-width: 200px;">
+                                    {{ Str::words($section->factory->address, 35, '...') }}
+                                </span>
                             </td>
                             <td class="actions align-middle text-end white-space-nowrap text-body-tertiary">
                                 <div class="btn-reveal-trigger position-static">

@@ -41,19 +41,22 @@
                 <table class="table table-sm fs-9 mb-0">
                     <thead>
                     <tr>
-                        <th class="sort align-middle" scope="col" data-sort="name" style="width:20%; min-width:200px;">
+                        <th class="sort align-middle" scope="col" data-sort="name" style="width:20%;">
                             NAME
                         </th>
-                        <th class="sort align-middle" scope="col" data-sort="designation" style="width:20%; min-width:200px;">
+                        <th class="sort align-middle" scope="col" data-sort="designation" style="width:20%;">
                             DESIGNATION
                         </th>
-                        <th class="sort align-middle pe-3" scope="col" data-sort="email" style="width:20%; min-width:200px;">
+                        <th class="sort align-middle pe-3" scope="col" data-sort="email" style="width:20%;">
                             EMAIL
                         </th>
-                        <th class="sort align-middle" scope="col" data-sort="mobile" style="width:20%; min-width:200px;">
+                        <th class="sort align-middle" scope="col" data-sort="mobile" style="width:20%;">
                             MOBILE
                         </th>
-                        <th class="sort align-middle text-end" scope="col" style="width:21%; min-width:200px;">
+                        <th class="sort align-middle" scope="col" data-sort="mobile" style="width:20%;">
+                            Joining Date
+                        </th>
+                        <th class="sort align-middle text-end" scope="col" >
                             ACTIONS
                         </th>
                     </tr>
@@ -62,7 +65,7 @@
                     @foreach($employees as $employee)
                         <tr class="hover-actions-trigger btn-reveal-trigger position-static">
                             <td class="customer align-middle white-space-nowrap">
-                                    {{ $employee->name }}
+                                {{ $employee->name }}
                             </td>
                             <td class="designation align-middle white-space-nowrap">
                                 {{ $employee->designation->title }}
@@ -72,6 +75,9 @@
                             </td>
                             <td class="mobile align-middle white-space-nowrap">
                                 {{ $employee->mobile_no }}
+                            </td>
+                           <td class="mobile align-middle white-space-nowrap">
+                                {{ $employee->joining_date }}
                             </td>
                             <td class="actions align-middle text-end white-space-nowrap text-body-tertiary">
                                 <div class="btn-reveal-trigger position-static">

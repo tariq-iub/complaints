@@ -1,9 +1,9 @@
-@extends('layouts.client')
+@extends('layouts.powereye')
 
 @section('content')
 
 <div class="container">
-    <h2 class="my-4 text-center">Complaint Timeline</h2>
+    <h2 class="fs-5 my-4 text-center">Timeline Of Complaint</h2>
     <div class="mb-4">
         <a href="{{ url()->previous() }}" class="btn btn-secondary">
             &larr; Back

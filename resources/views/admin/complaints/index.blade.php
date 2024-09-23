@@ -32,22 +32,22 @@
                 <table class="table table-sm fs-9 mb-0">
                     <thead>
                     <tr>
-                        <th class="sort align-middle" scope="col" data-sort="title" style="width:30%; min-width:100px;">
+                        <th class="sort align-middle" scope="col" data-sort="title" style="width:15%;">
                             TITLE
                         </th>
-                        <th class="sort align-middle" scope="col" data-sort="category" style="width:30%; min-width:100px;">
+                        <th class="sort align-middle" scope="col" data-sort="category" style="width:25%;">
                             CATEGORY
                         </th>
-                        <th class="sort align-middle" scope="col" data-sort="priority" style="width:20%; min-width:100px;">
+                        <th class="sort align-middle" scope="col" data-sort="priority" style="width:20%;">
                             PRIORITY
                         </th>
-                        <th class="sort align-middle" scope="col" data-sort="priority" style="width:20%; min-width:200px;">
+                        <th class="sort align-middle" scope="col" data-sort="priority" style="width:20%;">
                             Section Name
                         </th>
-                        <th class="sort align-middle" scope="col" data-sort="priority" style="width:20%; min-width:200px;">
+                        <th class="sort align-middle" scope="col" data-sort="priority" style="width:20%;">
                             Handler Name
                         </th>
-                        <th class="sort align-middle text-end" scope="col" style="width:20%; min-width:100px;">
+                        <th class="sort align-middle text-end" scope="col">
                             ACTIONS
                         </th>
                     </tr>
@@ -59,7 +59,7 @@
                                 {{ $complaint->title }}
                             </td>
                             <td class="category align-middle white-space-nowrap">
-                                {{ $complaint->category->name }}
+                                {{ $complaint->category->title }}
                             </td>
                             <td class="priority align-middle">
                                 @if($complaint->priority == 'normal')
@@ -74,7 +74,7 @@
                                 {{ $complaint->section->title ?? 'Not Assigned Yet' }}
                             </td>
                             <td class="handler align-middle">
-                                {{ $complaint->handler->name ?? 'N/A' }}
+                                {{ $complaint->handler->name ?? 'Not Assigned Yet' }}
                             </td>
                             <td class="actions align-middle text-end white-space-nowrap text-body-tertiary">
                                 <div class="btn-reveal-trigger position-static">

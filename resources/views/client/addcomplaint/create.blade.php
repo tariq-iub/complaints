@@ -1,8 +1,7 @@
-<!-- resources/views/client/addcomplaints/create.blade.php -->
-@extends('layouts.client')
+@extends('layouts.powereye')
 
 @section('content')
-    <h1>Create a Complaint</h1>
+    <h5 class="fs-5 mb-2 text-body-emphasis">Create a Complaint</h5>
 
     @if (session('success'))
         <p style="color: green;">{{ session('success') }}</p>
@@ -31,7 +30,7 @@
             <label for="category_id" class="form-label">Category</label>
             <select name="category_id" id="category_id" class="form-control">
                 @foreach ($categories as $category)
-                    <option value="{{ $category->id }}"{{ old('category_id') == $category->id ? ' selected' : '' }}>{{ $category->name }}</option>
+                    <option value="{{ $category->id }}"{{ old('category_id') == $category->id ? ' selected' : '' }}>{{ $category->title }}</option>
                 @endforeach
             </select>
             @error('category_id')

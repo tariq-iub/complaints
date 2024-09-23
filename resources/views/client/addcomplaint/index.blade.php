@@ -34,24 +34,25 @@
                 <table class="table table-sm fs-9 mb-0">
                     <thead>
                         <tr>
-                            <th class="sort align-middle" scope="col" data-sort="picture" style="width:10%; min-width:100px;">Picture</th>
-                            <th class="sort align-middle" scope="col" data-sort="title" style="width:20%; min-width:200px;">Title</th>
-                            <th class="sort align-middle" scope="col" data-sort="detail" style="width:20%; min-width:150px;">Detail</th>
-                            <th class="sort align-middle" scope="col" data-sort="category" style="width:15%; min-width:150px;">Category</th>
-                            <th class="sort align-middle" scope="col" data-sort="priority" style="width:10%; min-width:100px;">Priority</th>
-                            <th class="sort align-middle" scope="col" data-sort="section" style="width:15%; min-width:150px;">Section</th>
-                            <th class="sort align-middle" scope="col" data-sort="handler" style="width:15%; min-width:150px;">Handler</th>
-                            <th class="sort align-middle text-end" scope="col" style="width:10%; min-width:100px;">Actions</th>
+                            <th class="sort align-middle" scope="col" data-sort="picture" style="width:15%;">Picture</th>
+                            <th class="sort align-middle" scope="col" data-sort="title" style="width:15%; ">Title</th>
+                            <th class="sort align-middle" scope="col" data-sort="detail" style="width:15%; ">Detail</th>
+                            <th class="sort align-middle" scope="col" data-sort="category" style="width:15%;">Category</th>
+
+                            <th class="sort align-middle" scope="col" data-sort="priority" style="width:15%;">Priority</th>
+                            <th class="sort align-middle" scope="col" data-sort="section" style="width:15%;">Section</th>
+                            <th class="sort align-middle" scope="col" data-sort="handler" style="width:10%;">Handler</th>
+                            <th class="sort align-middle text-end" scope="col">Actions</th>
                         </tr>
                     </thead>
                     <tbody class="list" id="complaints-table-body">
                         @foreach($complaints as $complaint)
                             <tr class="hover-actions-trigger btn-reveal-trigger position-static">
-                                <td class="picture align-middle">
+                                <td class="picture align-items-center align-text-center align-middle">
                                     @if($complaint->photo_path)
                                         <img src="{{ asset('storage/' . $complaint->photo_path) }}" alt="Complaint Image" class="img-thumbnail" style="width: 50px; height: 50px; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#imageModal{{ $complaint->id }}">
                                     @else
-                                        N/A
+ 
                                     @endif
                                 </td>
                                 <td class="title align-middle">

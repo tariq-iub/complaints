@@ -112,7 +112,14 @@
                                         <input type="hidden" name="status" value="{{ !$row->status }}">
                                     </form>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item text-danger" href="javascript:void(0)">Remove</a>
+                                    <a class="dropdown-item text-danger" href="javascript:void(0)"
+                                       onclick="document.querySelector(`#delete-user-{{ $row->id }}`).submit();">
+                                        Remove
+                                    </a>
+                                    <form id="delete-user-{{ $row->id }}" action="{{ route('users.destroy', $row->id) }}" method="POST" style="display:none;">
+                                        @csrf
+                                        @method("DELETE")
+                                    </form>
                                 </div>
                             </div>
                         </td>

@@ -8,7 +8,7 @@ use App\Models\SectionHandler;
 use App\Models\Employee;
 use App\Models\Category;
 use Illuminate\Http\Request;
-
+use Carbon\Carbon;
 class ComplaintController extends Controller
 {
     // Admin Methods
@@ -17,7 +17,6 @@ class ComplaintController extends Controller
         $complaints = Complaint::with('category')->paginate(10);
         $sections = Section::all();  // Fetch all sections
         $handlers = Employee::all(); // Assuming handlers are employees
-
         return view('admin.complaints.index', compact('complaints', 'sections', 'handlers'));
     }
 
@@ -34,7 +33,7 @@ class ComplaintController extends Controller
             'detail' => 'nullable|string',
             'category_id' => 'required|exists:categories,id',
             'priority' => 'required|in:normal,urgent,express',
-            'photo_path' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'photo_path' => 'required|image|mimes:jpeg,png,jpg|max:10240',
         ]);
 
         $photoPath = $request->file('photo_path')?->store('photos', 'public');

@@ -17,10 +17,10 @@
                     <span class="fs-4 lh-1 uil uil-users-alt text-success-dark"></span>
                     <div class="ms-2">
                         <div class="d-flex align-items-end">
-                            <h2 class="mb-0 me-2">{{ $totalUsers }}</h2>
+                            <h2 class="mb-0 me-2">{{ $totalClients }}</h2>
                             <span class="fs-7 fw-semibold text-body">Clients</span>
                         </div>
-                        <p class="text-body-secondary fs-9 mb-0">System Registered</p>
+                        <p class="text-body-secondary fs-9 mb-0">All Active Clients</p>
                     </div>
                 </div>
             </div>
@@ -29,10 +29,10 @@
                     <span class="fs-4 lh-1 uil uil-books text-primary-dark"></span>
                     <div class="ms-2">
                         <div class="d-flex align-items-end">
-                            <h2 class="mb-0 me-2">{{ $factories }}</h2>
-                            <span class="fs-8 fw-semibold text-body">Factories</span>
+                            <h2 class="mb-0 me-2">{{ $lastMonth }}</h2>
+                            <span class="fs-7 fw-semibold text-body">Clients</span>
                         </div>
-                        <p class="text-body-secondary fs-9 mb-0" style="padding-left: 20px;">Registered By Clients</p>
+                        <p class="text-body-secondary fs-9 mb-0" style="padding-left: 20px;">Current Month</p>
                     </div>
                 </div>
             </div>
@@ -45,9 +45,9 @@
                     <div class="ms-2">
                         <div class="d-flex align-items-end">
                             <h2 class="mb-0 me-2">23</h2>
-                            <span class="fs-8 fw-semibold text-body">Subscription Expire</span>
+                            <span class="fs-7 fw-semibold text-body">Subscription</span>
                         </div>
-                        <p class="text-body-secondary fs-9 mb-0" style="padding-left: 20px;">Expires Within This Month</p>
+                        <p class="text-body-secondary fs-9 mb-0" style="padding-left: 20px;">All Active  in System</p>
                     </div>
                 </div>
             </div>
@@ -58,9 +58,9 @@
                     <div class="ms-2">
                         <div class="d-flex align-items-end">
                             <h2 class="mb-0 me-2">3</h2>
-                            <span class="fs-8 fw-semibold text-body">Subscription Request</span>
+                            <span class="fs-7 fw-semibold text-body">Subscription</span>
                         </div>
-                        <p class="text-body-secondary fs-9 mb-0">Fresh Start</p>
+                        <p class="text-body-secondary fs-9 mb-0">Expiring Current Month</p>
                     </div>
                 </div>
             </div>
@@ -72,49 +72,104 @@
 <div class="mx-n9 px-4 mx-lg-n6 px-lg-6 bg-body-emphasis pt-7 pb-3 border-y mt-6">
     <div class="col-12">
         <!-- Buttons to switch views -->
-        <div class="mb-3">
+        <div class="mb-3 d-flex align-items-center justify-content-between">
+            <h5 class="fs-6 text-body-emphasis">
+                Complaints Chart
+            </h5>
             <div class="btn-group" role="group" data-gantt-scale="data-gantt-scale">
                 <input class="btn-check" id="monthView" type="radio" name="scaleView" value="month" checked>
-                <label class="btn btn-phoenix-secondary bg-body-highlight-hover fs-10 py-1 mb-0" for="monthView">Month View</label>
+                <label class="btn btn-phoenix-secondary bg-body-highlight-hover fs-10 py-1 mb-0 text-end d-block" for="monthView">Current Month View</label>
                 
                 <input class="btn-check" id="weekView" type="radio" name="scaleView" value="week">
-                <label class="btn btn-phoenix-secondary bg-body-highlight-hover fs-10 py-1 mb-0" for="weekView">Week View</label>
+                <label class="btn btn-phoenix-secondary bg-body-highlight-hover fs-10 py-1 mb-0 text-end d-block" for="weekView">Current Week View</label>
             </div>
         </div>   
         
-        <!-- Line Chart Section -->
-        <div id="lineChart" style="width: 100%; height: 400px;"></div>
+        <!-- Bar Chart Section -->
+        <div>
+            <div id="barChart" style="width: 100%; height: 400px;"></div>
+        </div>
     </div>
 </div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        var chartDom = document.getElementById('lineChart');
+        var chartDom = document.getElementById('barChart');
         var myChart = echarts.init(chartDom);
 
-        var weekData = [820, 932, 901, 934, 1290, 1330, 1320]; // Example weekly data
-        var monthData = [1220, 1430, 1300, 1500]; // Example monthly data (e.g., weekly averages or totals)
+        var weekData = {
+            complaintsInitiate: @json($dailyComplaintsData),
+            complaintsAssigned: @json($dailyAssignedData),
+            complaintsResolved: @json($dailyResolvedData)
+        };
+
+        var monthData = {
+            complaintsInitiate: @json($weeksData),
+            complaintsAssigned: @json($assignedWeeksData),
+            complaintsResolved: @json($resolvedWeeksData),
+        };
+
+        // Function to calculate the maximum value for the yAxis
+        function getMaxValue(dataArrays) {
+            let max = Math.max(...dataArrays.flat(), 0),
+            per = max * 0.1;
+            return Math.ceil(max+per);
+        }
 
         var option = {
-            title: {
-                text: 'Sample Line Chart'
-            },
             tooltip: {
-                trigger: 'axis'
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'shadow'
+                }
+            },
+            legend: {
+                data: ['Complaints Initiate', 'Complaints Assigned', 'Complaints Resolved'],
+                top: '7%'
+            },
+            grid: {
+                left: '5.5%',
+                right: '2%',
+                bottom: '10%',
+                containLabel: true
             },
             xAxis: {
                 type: 'category',
-                boundaryGap: false,
-                data: ['Week 1', 'Week 2', 'Week 3', 'Week 4'], // Default to monthly view initially
+                data: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5'], // Default to monthly view initially
+                boundaryGap: true
             },
             yAxis: {
-                type: 'value'
+                type: 'value',
+                name: 'Number of Complaints\n',
+                max: getMaxValue(monthData.complaintsInitiate.concat(monthData.complaintsAssigned, monthData.complaintsResolved)) // Set the max value dynamically
             },
             series: [
                 {
-                    name: 'Value',
-                    type: 'line',
-                    data: monthData // Default to monthly view initially
+                    name: 'Complaints Initiate',
+                    type: 'bar',
+                    data: monthData.complaintsInitiate,
+                    itemStyle: {
+                        color: '#f04e2c'
+                    },
+                    barWidth: '15%'
+                },
+                {
+                    name: 'Complaints Assigned',
+                    type: 'bar',
+                    data: monthData.complaintsAssigned,
+                    itemStyle: {
+                        color: '#FFCA2C'
+                    },
+                    barWidth: '15%'
+                },
+                {
+                    name: 'Complaints Resolved',
+                    type: 'bar',
+                    data: monthData.complaintsResolved,
+                    itemStyle: {
+                        color: '#4ed22d'
+                    },
+                    barWidth: '15%'
                 }
             ]
         };
@@ -125,20 +180,29 @@
         document.getElementById('weekView').addEventListener('change', function () {
             if (this.checked) {
                 option.xAxis.data = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-                option.series[0].data = weekData;
+                option.series[0].data = weekData.complaintsInitiate;
+                option.series[1].data = weekData.complaintsAssigned;
+                option.series[2].data = weekData.complaintsResolved;
+                option.yAxis.max = getMaxValue(weekData.complaintsInitiate.concat(weekData.complaintsAssigned, weekData.complaintsResolved));
                 myChart.setOption(option);
             }
         });
 
         document.getElementById('monthView').addEventListener('change', function () {
             if (this.checked) {
-                option.xAxis.data = ['Week 1', 'Week 2', 'Week 3', 'Week 4'];
-                option.series[0].data = monthData;
+                option.xAxis.data = ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5'];
+                option.series[0].data = monthData.complaintsInitiate;
+                option.series[1].data = monthData.complaintsAssigned;
+                option.series[2].data = monthData.complaintsResolved;
+                option.yAxis.max = getMaxValue(monthData.complaintsInitiate.concat(monthData.complaintsAssigned, monthData.complaintsResolved));
                 myChart.setOption(option);
             }
         });
     });
 </script>
+
+
+
     <div class="mx-lg-n4 mt-3">
         <div class="row g-3">
             <div class="col-12 col-xl-6 col-xxl-7">

@@ -23,10 +23,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/section_handlers', [HandlerController::class, 'store']);
+Route::post('/handlers', [HandlerController::class, 'store']);
 Route::get('/factories', [FactoryController::class, 'fetch']);
-Route::get('/section_handlers/{section}', [SectionController::class, 'fetch'])->name('handler.fetch');
-Route::get('/api/section_handlers/{id}', [HandlerController::class, 'getSectionHandlers']);
+Route::get('/section_handlers/{section}', [HandlerController::class, 'index']);
 Route::post('/menus/update_order', [MenuController::class, 'updateOrder']);
 
 Route::get('/roles/attach_menus/{role}', [RoleController::class, 'attachModalBody']);
