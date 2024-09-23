@@ -101,7 +101,7 @@ class UserController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        if (Storage::disk('public')->exists($user->photo_path)) {
+        if ($user->photo_path && Storage::disk('public')->exists($user->photo_path)) {
             Storage::disk('public')->delete($user->photo_path);
         }
 
@@ -113,7 +113,10 @@ class UserController extends Controller
         }
 
         $user->name = $request->name;
-        $user->password = Hash::make($request->password);
+        if($request->input('changePasswordCheck') != null)
+            $user->password = Hash::make($request->password);
+        $user->cnic_no = $request->cnic_no;
+        $user->contact_no = $request->contact_no;
         $user->photo_path = $photoPath;
         $user->status = $request->status;
         $user->role_id = $request->role_id;

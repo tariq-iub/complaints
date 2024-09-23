@@ -28,12 +28,14 @@ Route::group(['middleware' => ['auth']], function ()
     Route::put('/users/status/{user}', [UserController::class, 'statusToggle'])->name('users.status');
     Route::get('/users/profile/{user}', [UserController::class, 'profile'])->name('users.profile');
 
+    Route::resource('/menus', MenuController::class);
+    Route::put('/menus/status/{menu}', [MenuController::class, 'statusToggle'])->name('menus.toggle');
+    
     Route::resource('/roles', RoleController::class);
     Route::post('/roles/role_menu_attachment', [RoleController::class, 'roleMenuAttachment'])->name('roles.role_menu_attachment');
     Route::post('/roles/role_menu_detachment', [RoleController::class, 'roleMenuDetachment'])->name('roles.role_menu_detachment');
 
-    Route::resource('/menus', MenuController::class);
-    Route::put('/menus/{menu}', [MenuController::class, 'statusToggle'])->name('menus.toggle');
+    
     Route::resource('/factories', FactoryController::class);
     Route::resource('/sections', SectionController::class);
     Route::resource('/handlers', HandlerController::class);
