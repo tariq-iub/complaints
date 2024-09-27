@@ -55,23 +55,37 @@
                     <input class="form-control" type="email" id="email" name="email" placeholder="Email"
                            value="{{ old('email') }}" required>
                 </div>
+            </div>
 
-                <div class="mb-5">
-                    <h5>Contact No</h5>
-                    <input class="form-control" type="text" id="contact_no" name="contact_no" placeholder="Contact No"
-                           value="{{ old('contact_no') }}">
-                </div>
+            <div class="col-12 col-xl-4">
+                <!-- Card for Contact No and Fax -->
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row gx-3">
+                            <div class="col-12 col-sm-6 col-xl-12 mb-3">
+                                <label for="contact_no" class="form-label">Contact No</label>
+                                <input class="form-control" type="text" id="contact_no" name="contact_no" 
+                                       placeholder="Contact No" value="{{ old('contact_no') }}">
+                                @error('contact_no')
+                                    <div class="text-danger small">{{ $message }}</div>
+                                @enderror
+                            </div>
 
-                <div class="mb-5">
-                    <h5>Fax</h5>
-                    <input class="form-control" type="text" id="fax" name="fax" placeholder="Fax"
-                           value="{{ old('fax') }}">
+                            <div class="col-12 col-sm-6 col-xl-12 mb-3">
+                                <label for="fax" class="form-label">Fax</label>
+                                <input class="form-control" type="text" id="fax" name="fax" 
+                                       placeholder="Fax" value="{{ old('fax') }}">
+                                @error('fax')
+                                    <div class="text-danger small">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                <!-- End Card for Contact No and Fax -->
             </div>
         </div>
     </form>
-    
-
 @endsection
 
 @push('scripts')

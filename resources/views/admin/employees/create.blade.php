@@ -86,7 +86,6 @@
             <div class="col-12 col-xl-4">
                 <div class="card mb-3">
                     <div class="card-body">
-                        <h4 class="card-title mb-4">Organize</h4>
                         <div class="row gx-3">
                             <div class="col-12 col-sm-6 col-xl-12 mb-3">
                                 <label for="gender" class="form-label">Gender</label>
