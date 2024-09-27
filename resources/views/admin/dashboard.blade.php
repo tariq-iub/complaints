@@ -26,13 +26,13 @@
             </div>
             <div class="col-12 col-sm-6 col-md-3 col-lg-6 col-xl-3 col-xxl-12">
                 <div class="d-flex align-items-center">
-                    <span class="fs-4 lh-1 uil uil-books text-primary-dark"></span>
+                    <span class="fs-4 lh-1 uil uil-user text-primary-dark"></span>
                     <div class="ms-2">
                         <div class="d-flex align-items-end">
                             <h2 class="mb-0 me-2">{{ $lastMonth }}</h2>
                             <span class="fs-7 fw-semibold text-body">Clients</span>
                         </div>
-                        <p class="text-body-secondary fs-9 mb-0" style="padding-left: 20px;">Current Month</p>
+                        <p class="text-body-secondary fs-9 mb-0">Current Month</p>
                     </div>
                 </div>
             </div>
@@ -41,20 +41,20 @@
 
             <div class="col-12 col-sm-6 col-md-3 col-lg-6 col-xl-3 col-xxl-12">
                 <div class="d-flex align-items-center">
-                    <span class="fs-4 lh-1 uil uil-invoice text-warning-dark"></span>
+                    <span class="fs-4 lh-1 uil uil-receipt text-warning-dark"></span>
                     <div class="ms-2">
                         <div class="d-flex align-items-end">
                             <h2 class="mb-0 me-2">{{ $activeSubscriptionsCount }}</h2>
                             <span class="fs-7 fw-semibold text-body">Subscription</span>
                         </div>
-                        <p class="text-body-secondary fs-9 mb-0" style="padding-left: 20px;">All Active  in System</p>
+                        <p class="text-body-secondary fs-9 mb-0">All Active  in System</p>
                     </div>
                 </div>
             </div>
 
             <div class="col-12 col-sm-6 col-md-3 col-lg-6 col-xl-3 col-xxl-12">
                 <div class="d-flex align-items-center">
-                    <span class="fs-4 lh-1 uil uil-refresh text-danger-dark"></span>
+                    <span class="fs-4 lh-1 uil uil-file-block-alt text-danger-dark"></span>
                     <div class="ms-2">
                         <div class="d-flex align-items-end">
                             <h2 class="mb-0 me-2">{{ $subscriptionsEndingThisMonthCount }}</h2>
