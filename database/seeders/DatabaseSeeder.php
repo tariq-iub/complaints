@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             FactoryTableSeeder::class,
             MenuTableSeeder::class,
             ComplaintCategoriesSeeder::class,
+            SubscriptionSeeder::class,
         ]);
     }
 }

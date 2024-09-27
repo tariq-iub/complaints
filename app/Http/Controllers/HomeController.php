@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Factory;
 use App\Models\Complaint;
+use App\Models\Subscription;
 use Carbon\Carbon;
 class HomeController extends Controller
 {
@@ -33,7 +34,10 @@ class HomeController extends Controller
             $endOfMonth = Carbon::now()->endOfMonth();
             $startOfWeek = Carbon::now()->startOfWeek();
             $endOfWeek = Carbon::now()->endOfWeek();
-
+            $activeSubscriptionsCount = Subscription::where('stripe_status', 'active')->count();
+            $endOfMonth = Carbon::now()->endOfMonth();
+            $startOfMonth = Carbon::now()->startOfMonth();
+            $subscriptionsEndingThisMonthCount = Subscription::whereBetween('ends_at', [$startOfMonth, $endOfMonth])->count();
             // Initialize arrays
             $weeksData = [];
             $resolvedWeeksData = [];
@@ -79,7 +83,7 @@ class HomeController extends Controller
             return view('admin.dashboard', compact(
                 'totalClients', 'factories', 'clients', 'lastMonth',
                 'weeksData', 'resolvedWeeksData', 'assignedWeeksData',
-                'dailyComplaintsData', 'dailyResolvedData', 'dailyAssignedData'
+                'dailyComplaintsData', 'dailyResolvedData', 'dailyAssignedData','activeSubscriptionsCount', 'subscriptionsEndingThisMonthCount'
             ));
 
         }
